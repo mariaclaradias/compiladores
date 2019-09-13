@@ -10,84 +10,85 @@ import java.util.HashMap;
  */
 
 public class SymbolTable {
-    
-    public final static enum Table {
-        ID,
-        CONST,
-        INTEGER,
-        BYTE,
-        STRING,
-        WHILE,
-        IF,
-        ELSE,
-        AND,
-        OR,
-        NOT,
-        EQUAL,
-        EQUAL_TO,
-        OPEN_PAR,
-        CLOSE_PAR,
-        LESS,
-        GREATER,
-        NOT_EQUAL,
-        GREATER_EQUAL,
-        LESS_EQUAL,
-        COMMA,
-        ADD,
-        SUB,
-        MULT,
-        DIV,
-        SEMICOLON,
-        BEGIN,
-        END,
-        THEN,
-        READLN,
-        MAIN,
-        WRITE,
-        WRITELN,
-        TRUE,
-        FALSE,
-        BOOLEAN;
-    }
+
+    public static final byte ID = 0;
+    public static final byte CONST = 1;
+    public static final byte INTEGER = 2;
+    public static final byte BYTE = 3;
+    public static final byte STRING = 4;
+    public static final byte WHILE = 5;
+    public static final byte IF = 6;
+    public static final byte ELSE = 7;
+    public static final byte AND = 8;
+    public static final byte OR = 9;
+    public static final byte NOT = 10;
+    public static final byte EQUAL = 11;
+    public static final byte EQUAL_TO = 12;
+    public static final byte OPEN_PAR = 13;
+    public static final byte CLOSE_PAR = 14;
+    public static final byte LESS = 15;
+    public static final byte GREATER = 16;
+    public static final byte NOT_EQUAL = 17;
+    public static final byte GREATER_EQUAL = 18;
+    public static final byte LESS_EQUAL = 19;
+    public static final byte COMMA = 20;
+    public static final byte ADD = 21;
+    public static final byte SUB = 22;
+    public static final byte MULT = 23;
+    public static final byte DIV = 24;
+    public static final byte SEMICOLON = 25;
+    public static final byte BEGIN = 26;
+    public static final byte END = 27;
+    public static final byte THEN = 28;
+    public static final byte READLN = 29;
+    public static final byte MAIN = 30;
+    public static final byte WRITE = 31;
+    public static final byte WRITELN = 32;
+    public static final byte TRUE = 33;
+    public static final byte FALSE = 34;
+    public static final byte BOOLEAN = 35;
     
     public HashMap<String, Symbol> hashTable = new HashMap<>();
     
     public SymbolTable() {
-        hashTable.put("id", new Symbol(Table.ID, "id"));
-        hashTable.put("const", new Symbol(Table.CONST, "const"));
-        hashTable.put("integer", new Symbol(Table.INTEGER, "integer"));
-        hashTable.put("byte", new Symbol(Table.BYTE, "byte"));
-        hashTable.put("string", new Symbol(Table.STRING, "string"));
-        hashTable.put("while", new Symbol(Table.WHILE, "while"));
-        hashTable.put("if", new Symbol(Table.IF, "if"));
-        hashTable.put("else", new Symbol(Table.ELSE, "else"));
-        hashTable.put("and", new Symbol(Table.AND, "and"));
-        hashTable.put("or", new Symbol(Table.OR, "or"));
-        hashTable.put("not", new Symbol(Table.NOT, "not"));
-        hashTable.put("=", new Symbol(Table.EQUAL, "="));
-        hashTable.put("==", new Symbol(Table.EQUAL_TO, "=="));
-        hashTable.put("(", new Symbol(Table.OPEN_PAR, "("));
-        hashTable.put(")", new Symbol(Table.CLOSE_PAR, ")"));
-        hashTable.put("<", new Symbol(Table.LESS, "<"));
-        hashTable.put(">", new Symbol(Table.GREATER, ">"));
-        hashTable.put("!=", new Symbol(Table.NOT_EQUAL, "!="));
-        hashTable.put(">=", new Symbol(Table.GREATER_EQUAL, ">="));
-        hashTable.put("<=", new Symbol(Table.LESS_EQUAL, "<="));
-        hashTable.put(",", new Symbol(Table.COMMA, ","));
-        hashTable.put("+", new Symbol(Table.ADD, "+"));
-        hashTable.put("-", new Symbol(Table.SUB, "-"));
-        hashTable.put("*", new Symbol(Table.MULT, "*"));
-        hashTable.put("/", new Symbol(Table.DIV, "/"));
-        hashTable.put(";", new Symbol(Table.SEMICOLON, ";"));
-        hashTable.put("begin", new Symbol(Table.BEGIN, "begin"));
-        hashTable.put("end", new Symbol(Table.END, "end"));
-        hashTable.put("then", new Symbol(Table.THEN, "then"));
-        hashTable.put("readln", new Symbol(Table.READLN, "readln"));
-        hashTable.put("main", new Symbol(Table.MAIN, "main"));
-        hashTable.put("write", new Symbol(Table.WRITE, "write"));
-        hashTable.put("writeln", new Symbol(Table.WRITELN, "writeln"));
-        hashTable.put("true", new Symbol(Table.TRUE, "true"));
-        hashTable.put("false", new Symbol(Table.FALSE, "false"));
-        hashTable.put("boolean", new Symbol(Table.BOOLEAN, "boolean"));
+
+        hashTable.put("id", new Symbol(ID, "id"));
+        hashTable.put("const", new Symbol(CONST, "const"));
+        hashTable.put("integer", new Symbol(INTEGER, "integer"));
+        hashTable.put("byte", new Symbol(BYTE, "byte"));
+        hashTable.put("string", new Symbol(STRING, "string"));
+        hashTable.put("while", new Symbol(WHILE, "while"));
+        hashTable.put("if", new Symbol(IF, "if"));
+        hashTable.put("else", new Symbol(ELSE, "else"));
+        hashTable.put("and", new Symbol(AND, "and"));
+        hashTable.put("or", new Symbol(OR, "or"));
+        hashTable.put("not", new Symbol(NOT, "not"));
+        hashTable.put("=", new Symbol(EQUAL, "="));
+        hashTable.put("==", new Symbol(EQUAL_TO, "=="));
+        hashTable.put("(", new Symbol(OPEN_PAR, "("));
+        hashTable.put(")", new Symbol(CLOSE_PAR, ")"));
+        hashTable.put("<", new Symbol(LESS, "<"));
+        hashTable.put(">", new Symbol(GREATER, ">"));
+        hashTable.put("!=", new Symbol(NOT_EQUAL, "!="));
+        hashTable.put(">=", new Symbol(GREATER_EQUAL, ">="));
+        hashTable.put("<=", new Symbol(LESS_EQUAL, "<="));
+        hashTable.put(",", new Symbol(COMMA, ","));
+        hashTable.put("+", new Symbol(ADD, "+"));
+        hashTable.put("-", new Symbol(SUB, "-"));
+        hashTable.put("*", new Symbol(MULT, "*"));
+        hashTable.put("/", new Symbol(DIV, "/"));
+        hashTable.put(";", new Symbol(SEMICOLON, ";"));
+        hashTable.put("begin", new Symbol(BEGIN, "begin"));
+        hashTable.put("end", new Symbol(END, "end"));
+        hashTable.put("then", new Symbol(THEN, "then"));
+        hashTable.put("readln", new Symbol(READLN, "readln"));
+        hashTable.put("main", new Symbol(MAIN, "main"));
+        hashTable.put("write", new Symbol(WRITE, "write"));
+        hashTable.put("writeln", new Symbol(WRITELN, "writeln"));
+        hashTable.put("true", new Symbol(TRUE, "true"));
+        hashTable.put("false", new Symbol(FALSE, "false"));
+        hashTable.put("boolean", new Symbol(BOOLEAN, "boolean"));
+    
     }
+
 }

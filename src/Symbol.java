@@ -16,18 +16,14 @@ public class Symbol {
     private int address;
     private String lexeme;
 
-    public static final enum Category {
-        NONE, 
-        CONST;
-    }
+    public static final byte NO_CATEGORY = 0;
+    public static final byte CATEGORY_CONST = 1;
 
-    public static final enum Type {
-        NONE,
-        INTEGER,
-        BYTE,
-        STRING,
-        BOOL;
-    }
+    public static final byte NO_TYPE = 0;
+    public static final byte TYPE_INTEGER = 1;
+    public static final byte TYPE_BYTE = 2;
+    public static final byte TYPE_STRING = 3;
+    public static final byte TYPE_BOOLEAN = 4;
     
     public byte getToken() {
         return token;
@@ -90,7 +86,7 @@ public class Symbol {
         this.token = token;
         this.lexeme = lexeme;
         this.type = type;
-        this.category = Category.NONE;
+        this.category = NO_CATEGORY;
         this.size = size;
     }
 }
