@@ -3,41 +3,41 @@ import java.io.FileReader;
 import java.io.InputStreamReader;
 
 public class Main {
-  static BufferedReader arquivo;
+  static BufferedReader file;
 
   public static void main(String[] args) {
-    leituraArquivo();
-    // SymbolTable tabela = new SymbolTable();
+    readFile();
+    // SymbolTable table = new SymbolTable();
 
-    // tabela.insertID("idade", (byte) 1);
-    // tabela.insertID("nome", (byte) 3);
+    // table.insertID("age", (byte) 1);
+    // table.insertID("name", (byte) 3);
 
-    // tabela.showSymbolsTable();
+    // table.showSymbolsTable();
 
-    // Symbol simbolo = tabela.searchLexeme("esse");
+    // Symbol sym = tabela.searchLexeme("id");
     // System.out
-    // .println("Token: " + simbolo.getToken() + ", Lexema: " + simbolo.getLexeme()
-    // + ", tipo: " + simbolo.getType());
+    // .println("Token: " + sym.getToken() + ", Lexeme: " + sym.getLexeme()
+    // + ", Type: " + sym.getType());
   }
 
-  public static void leituraArquivo() {
-    BufferedReader entrada = new BufferedReader(new InputStreamReader(System.in));
-    String nome = "";
+  public static void readFile() {
+    BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
+    String name = "";
 
     try {
-      System.out.print("Digite o nome do arquivo a ser lido: ");
-      nome = entrada.readLine();
+      System.out.print("Type the name of the file: ");
+      name = input.readLine();
 
-      if (nome.length() > 0 && nome.charAt(nome.length() - 2) != '.' && nome.charAt(nome.length() - 1) != 'l') {
-        System.err.println("Esse arquivo não é válido");
-        leituraArquivo();
+      if (name.length() > 0 && name.charAt(name.length() - 2) != '.' && name.charAt(name.length() - 1) != 'l') {
+        System.err.println("Invalid name! Check the name and the extension of the file");
+        readFile();
       } else {
-        System.err.println("Arquivo foi encontrado!");
-        arquivo = new BufferedReader(new FileReader(nome));
+        System.out.println("File found!");
+        file = new BufferedReader(new FileReader(name));
       }
     } catch (Exception e) {
-      System.err.println("Arquivo não encontrado");
-      leituraArquivo();
+      System.err.println("File not found");
+      readFile();
     }
   }
 }
