@@ -95,21 +95,14 @@ public class SymbolTable {
     }
 
     /**
-     * Scan the table looking for the lexeme, and if it exists return the memory
-     * address. If not, return NULL;
+     * Retorna o item da tabela
      */
     public Symbol searchLexeme(String lexeme) {
         return hashTable.get(lexeme.toLowerCase());
     }
 
-    /*
-     * public Symbol insertConst(String lexeme, byte type) { Symbol symbol = new
-     * Symbol(VALUE, lexeme, type); hashTable.put(lexeme, symbol); return symbol; }
-     */
-
     /**
-     * It lists all items on the symbols table. Has to be disabled before
-     * delivering.
+     * Imprime na tela os itens inseridos na tabela
      */
     public void showSymbolsTable() {
         for (String key : hashTable.keySet()) {
