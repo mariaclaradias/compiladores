@@ -10,7 +10,6 @@ import java.util.HashMap;
  */
 
 public class SymbolTable {
-
     public static final byte ID = 0;
     public static final byte CONST = 1;
     public static final byte INTEGER = 2;
@@ -51,6 +50,9 @@ public class SymbolTable {
 
     public HashMap<String, Symbol> hashTable = new HashMap<>();
 
+    /**
+     * Construtor
+     */
     public SymbolTable() {
 
         hashTable.put("id", new Symbol(ID, "id"));
@@ -92,4 +94,26 @@ public class SymbolTable {
         hashTable.put(";", new Symbol(APOSTROPHE, "''"));
     }
 
+    /**
+     * Scan the table looking for the lexeme, and if it exists return the memory
+     * address. If not, return NULL;
+     */
+    public Symbol searchLexeme(String lexeme) {
+        return hashTable.get(lexeme.toLowerCase());
+    }
+
+    /*
+     * public Symbol insertConst(String lexeme, byte type) { Symbol symbol = new
+     * Symbol(VALUE, lexeme, type); hashTable.put(lexeme, symbol); return symbol; }
+     */
+
+    /**
+     * It lists all items on the symbols table. Has to be disabled before
+     * delivering.
+     */
+    public void showSymbolsTable() {
+        for (String key : hashTable.keySet()) {
+            System.out.println(hashTable.get(key).getToken() + " " + hashTable.get(key).getLexeme());
+        }
+    }
 }

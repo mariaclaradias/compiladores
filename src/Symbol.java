@@ -3,8 +3,7 @@
  * @author Maria Clara Dias
  * @author Pedro Pimenta
  * 
- * Class Symbol
- * {@summary} Basic structure and features of a Symbol.
+ *         Class Symbol {@summary} Basic structure and features of a Symbol.
  */
 
 public class Symbol {
@@ -24,24 +23,24 @@ public class Symbol {
     public static final byte TYPE_BYTE = 2;
     public static final byte TYPE_STRING = 3;
     public static final byte TYPE_BOOLEAN = 4;
-    
+
     public byte getToken() {
         return token;
     }
-    
-    public byte getCategory(){
+
+    public byte getCategory() {
         return category;
     }
 
-    public void setCategory(byte category){
+    public void setCategory(byte category) {
         this.category = category;
     }
 
-    public byte getType(){
+    public byte getType() {
         return type;
     }
 
-    public void setType(byte type){
+    public void setType(byte type) {
         this.type = type;
     }
 
@@ -53,15 +52,15 @@ public class Symbol {
         return size;
     }
 
-    public void setSize(byte size){
+    public void setSize(byte size) {
         this.size = size;
     }
 
-    public int getAddress(){
+    public int getAddress() {
         return address;
     }
 
-    public void setAddress(int address){
+    public void setAddress(int address) {
         this.address = type;
     }
 
@@ -73,16 +72,16 @@ public class Symbol {
         this.lexeme = lexeme;
     }
 
-    public Symbol(){
+    public Symbol() {
 
     }
 
-    public Symbol(byte token, String lexeme){
+    public Symbol(byte token, String lexeme) {
         this.token = token;
         this.lexeme = lexeme;
     }
 
-    public Symbol(byte token, String lexeme, byte type, int size){
+    public Symbol(byte token, String lexeme, byte type, int size) {
         this.token = token;
         this.lexeme = lexeme;
         this.type = type;
