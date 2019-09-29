@@ -24,6 +24,14 @@ public class Symbol {
     public static final byte TYPE_STRING = 3;
     public static final byte TYPE_BOOLEAN = 4;
 
+    public Symbol(byte token, String lexeme, byte type) {
+        this.token = token;
+        this.lexeme = lexeme;
+        this.type = type;
+        this.category = NO_CATEGORY;
+        this.size = -1;
+    }
+
     public byte getToken() {
         return token;
     }

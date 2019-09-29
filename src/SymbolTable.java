@@ -102,6 +102,18 @@ public class SymbolTable {
     }
 
     /**
+     * 
+     * @param lexeme
+     * @param string2
+     * @return
+     */
+    public Symbol insertID(String lexeme, byte type) {
+        Symbol symbol = new Symbol(ID, lexeme, type);
+        hashTable.put(lexeme, symbol);
+        return symbol;
+    }
+
+    /**
      * Imprime na tela os itens inseridos na tabela
      */
     public void showSymbolsTable() {
