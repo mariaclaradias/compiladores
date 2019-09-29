@@ -30,7 +30,9 @@ public class Main {
 
       if (nome.length() > 0 && nome.charAt(nome.length() - 2) != '.' && nome.charAt(nome.length() - 1) != 'l') {
         System.err.println("Esse arquivo não é válido");
+        leituraArquivo();
       } else {
+        System.err.println("Arquivo foi encontrado!");
         arquivo = new BufferedReader(new FileReader(nome));
       }
     } catch (Exception e) {
