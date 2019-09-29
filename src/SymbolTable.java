@@ -4,9 +4,6 @@ import java.util.HashMap;
  * @author Jorge Oliveira
  * @author Maria Clara Dias
  * @author Pedro Pimenta
- * 
- *         SymbolTable {@summary} Table containing all the Symbols, IDs and
- *         Addresses.
  */
 
 public class SymbolTable {
@@ -51,7 +48,7 @@ public class SymbolTable {
     public HashMap<String, Symbol> hashTable = new HashMap<>();
 
     /**
-     * Construtor
+     * Constructor of the class Table containing the symbols, IDs and addresses.
      */
     public SymbolTable() {
 
@@ -91,20 +88,14 @@ public class SymbolTable {
         hashTable.put("*", new Symbol(MULT, "*"));
         hashTable.put("/", new Symbol(DIV, "/"));
         hashTable.put(";", new Symbol(SEMICOLON, ";"));
-        hashTable.put(";", new Symbol(APOSTROPHE, "''"));
+        hashTable.put(";", new Symbol(APOSTROPHE, "'"));
     }
 
     /**
-     * Retorna o item da tabela
+     * Return an symbol of the hash table
      */
-    public Symbol searchLexeme(String lexeme) throws Exception {
-        try {
-            return hashTable.get(lexeme);
-        } catch (Exception e) {
-            System.out.println(e);
-            return null;
-        }
-
+    public Symbol searchLexeme(String lexeme) {
+        return hashTable.get(lexeme);
     }
 
     /**
@@ -120,7 +111,7 @@ public class SymbolTable {
     }
 
     /**
-     * Imprime na tela os itens inseridos na tabela
+     * Print all the items of the table
      */
     public void showSymbolsTable() {
         for (String key : hashTable.keySet()) {
