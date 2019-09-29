@@ -97,14 +97,20 @@ public class SymbolTable {
     /**
      * Retorna o item da tabela
      */
-    public Symbol searchLexeme(String lexeme) {
-        return hashTable.get(lexeme.toLowerCase());
+    public Symbol searchLexeme(String lexeme) throws Exception {
+        try {
+            return hashTable.get(lexeme);
+        } catch (Exception e) {
+            System.out.println(e);
+            return null;
+        }
+
     }
 
     /**
      * 
      * @param lexeme
-     * @param string2
+     * @param type
      * @return
      */
     public Symbol insertID(String lexeme, byte type) {
