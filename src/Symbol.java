@@ -32,6 +32,29 @@ public class Symbol {
         this.size = -1;
     }
 
+    
+    public void setCategory(byte category) {
+        this.category = category;
+    }
+    
+    public void setType(byte type) {
+        this.type = type;
+    }
+    
+    public void setToken(byte token) {
+        this.token = token;
+    }
+    public void setSize(byte size) {
+        this.size = size;
+    }
+    public void setAddress(int address) {
+        this.address = type;
+    }
+    
+    public void setLexeme(String lexeme) {
+        this.lexeme = lexeme;
+    }
+    
     public byte getToken() {
         return token;
     }
@@ -40,46 +63,22 @@ public class Symbol {
         return category;
     }
 
-    public void setCategory(byte category) {
-        this.category = category;
-    }
-
-    public byte getType() {
-        return type;
-    }
-
-    public void setType(byte type) {
-        this.type = type;
-    }
-
-    public void setToken(byte token) {
-        this.token = token;
-    }
-
     public int getSize() {
         return size;
     }
-
-    public void setSize(byte size) {
-        this.size = size;
+    
+    public byte getType() {
+        return type;
     }
 
     public int getAddress() {
         return address;
     }
 
-    public void setAddress(int address) {
-        this.address = type;
-    }
-
     public String getLexeme() {
         return lexeme;
     }
-
-    public void setLexeme(String lexeme) {
-        this.lexeme = lexeme;
-    }
-
+    
     public Symbol() {
 
     }

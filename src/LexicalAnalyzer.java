@@ -23,11 +23,11 @@ class LexicalAnalyzer {
         this.shouldReturnCharacter = false;
         this.nextState = 0;
     }
-
+    
     public Symbol getSymbol(){
         return this.symbol;
     }
-
+    
     private void checkReturn(){
         try {
             if (this.shouldReturnCharacter){
@@ -38,6 +38,10 @@ class LexicalAnalyzer {
         } catch (Exception e) {
             //TODO: handle exception
         }
+    }
+    
+    private void updateLexeme(){
+        this.lexeme += this.currentCharacter;
     }
 
     private void AFD(){
@@ -73,10 +77,10 @@ class LexicalAnalyzer {
                     break;
             }
         }
-
+        
         this.symbol = new Symbol();
     }
-
+    
     private void state_00(){
         this.lexeme = "";
 
@@ -88,7 +92,7 @@ class LexicalAnalyzer {
             this.nextState = 1;
         } 
         
-        if(ALLOWED_CHARACTERS.contains(this.currentCharacter){
+        if(ALLOWED_CHARACTERS.contains(this.currentCharacter)){
             if (this.currentCharacter == '_'){
                 this.nextState = 2;
             } else if (this.currentCharacter == '<' || this.currentCharacter == '>' || this.currentCharacter == '='){
@@ -101,12 +105,13 @@ class LexicalAnalyzer {
                 this.currentLine++;
             } else if (this.currentCharacter == '\''){ 
                 this.nextState = 9;
-            {
+            } else {
                 this.nextState = 13;
             }        
         }
-        this.lexeme += this.currentCharacter;
+        updateLexeme();
     }
+
 
     private void state_01(){
         this.lexeme = "";
@@ -114,12 +119,10 @@ class LexicalAnalyzer {
         checkReturn();
 
         if (Character.isDigit(this.currentCharacter)) {
-            this.lexeme += this.currentCharacter;
+            updateLexeme();
         } else if (Character.isLetter(this.currentCharacter)) {
 
-        }
-
-        this.lexeme += this.currentCharacter;
+        }   
     }
 
     private void state_02(){
@@ -131,7 +134,7 @@ class LexicalAnalyzer {
             this.nextState = 3;
         }
 
-        this.lexeme += this.currentCharacter;
+        updateLexeme();
     }
 
     private void state_03(){
@@ -144,7 +147,7 @@ class LexicalAnalyzer {
             shouldReturnCharacter = true;
         }
 
-        this.lexeme += this.currentCharacter;
+        updateLexeme();
     }
 
     private void state_04(){
@@ -156,7 +159,7 @@ class LexicalAnalyzer {
             this.nextState = 1;
         }
 
-        this.lexeme += this.currentCharacter;
+        updateLexeme();
     }
 
     private void state_05(){
@@ -168,7 +171,7 @@ class LexicalAnalyzer {
           this.shouldReturnCharacter = true;
         }
 
-        this.lexeme += this.currentCharacter;
+        updateLexeme();
     }
     
     private void state_06(){
@@ -181,7 +184,7 @@ class LexicalAnalyzer {
             this.nextState = 7;
         }
 
-        this.lexeme += this.currentCharacter;
+        updateLexeme();
     }
 
     private void state_07(){
@@ -193,7 +196,7 @@ class LexicalAnalyzer {
             this.nextState = 8;
         }
 
-        this.lexeme += this.currentCharacter;
+        updateLexeme();
     }
 
     private void state_08(){
@@ -207,7 +210,7 @@ class LexicalAnalyzer {
             this.nextState = 0;
         }
 
-        this.lexeme += this.currentCharacter;
+        updateLexeme();
     }
 
     private void state_09(){
@@ -217,7 +220,7 @@ class LexicalAnalyzer {
             this.nextState = 10;
         }
 
-        this.lexeme += this.currentCharacter;
+        updateLexeme();
     }
 
     private void state_10(){
@@ -230,7 +233,7 @@ class LexicalAnalyzer {
             this.nextState = 10;
 
         }
-        this.lexeme += this.currentCharacter;
+        updateLexeme();
     }
 
     private void state_11(){
@@ -242,7 +245,7 @@ class LexicalAnalyzer {
                 Character.isLetterOrDigit(this.currentCharacter)){
             this.nextState = 10;
         }
-        this.lexeme += this.currentCharacter;
+        updateLexeme();
     }
 
     
