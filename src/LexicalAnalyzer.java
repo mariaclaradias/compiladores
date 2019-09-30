@@ -279,7 +279,7 @@ class LexicalAnalyzer {
     private void state_13() {
         checkReturn();
 
-        if (Character.isDigit(currentCharacter)) {
+        if (Character.isDigit(this.currentCharacter) || this.currentCharacter > 'A' && this.currentCharacter < 'F') {
             this.nextState = 14;
         }
         updateLexeme();
