@@ -24,12 +24,12 @@ class LexicalAnalyzer {
         this.shouldReturnCharacter = false;
         this.nextState = 0;
     }
-    
-    public Symbol getSymbol(){
+
+    public Symbol getSymbol() {
         return this.symbol;
     }
-    
-    private void checkReturn(){
+
+    private void checkReturn() {
         try {
             if (this.shouldReturnCharacter) {
                 this.shouldReturnCharacter = false;
@@ -40,8 +40,8 @@ class LexicalAnalyzer {
             // TODO: handle exception
         }
     }
-    
-    private void updateLexeme(){
+
+    private void updateLexeme() {
         this.lexeme += this.currentCharacter;
     }
 
@@ -90,7 +90,7 @@ class LexicalAnalyzer {
                 break;
             }
         }
-        
+
         this.symbol = new Symbol();
     }
 
@@ -136,7 +136,7 @@ class LexicalAnalyzer {
             updateLexeme();
         } else if (Character.isLetter(this.currentCharacter)) {
 
-        }   
+        }
     }
 
     private void state_02() {
@@ -274,7 +274,7 @@ class LexicalAnalyzer {
             this.nextState = 15;
         }
 
-        this.lexeme += this.currentCharacter;
+        updateLexeme();
     }
 
     private void state_13() {
@@ -284,7 +284,7 @@ class LexicalAnalyzer {
             this.nextState = 14;
         }
 
-        this.lexeme += this.currentCharacter;
+        updateLexeme();
     }
 
     private void state_14() {
@@ -295,8 +295,7 @@ class LexicalAnalyzer {
             this.nextState = 15;
         }
 
-        this.lexeme += this.currentCharacter;
-
+        updateLexeme();
     }
 
 }
