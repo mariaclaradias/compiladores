@@ -22,25 +22,16 @@ public class SyntaxAnalyzer {
             symbol = lexicalAnalyzer.getSymbol();
         } else {
             if (lexicalAnalyzer.isEndOfFile()) {
-                // fim de arquivo n esperado
+                ErrorHandler.
             } else {
                 // token n esperado
             }
         }
     }
 
-    private void descendentParser(){
+    private void descendentParser(){}
 
-    }
-
-
-    private void instruction(){
-
-    }
-
-    private void attribution(){}
-
-    private void declaration(){}
+    private void instruction(){}
 
     private void command(){}
 
@@ -49,8 +40,6 @@ public class SyntaxAnalyzer {
     private void loopCommands(){}
 
     private void test(){}
-
-    private void testCommands(){}
     
     private void read(){}
 

@@ -29,6 +29,10 @@ class LexicalAnalyzer {
         return this.symbol;
     }
 
+    public int getCurrentLine(){
+        return this.currentLine;
+    }
+
     public boolean isEndOfFile(){
         return this.endOfFile;
     }
@@ -54,50 +58,35 @@ class LexicalAnalyzer {
 
         while (this.nextState != 12) {
             switch (this.nextState) {
-            case 0:
-                state_00();
+            case 0: state_00();
                 break;
-            case 1:
-                state_01();
+            case 1: state_01();
                 break;
-            case 2:
-                state_02();
+            case 2: state_02();
                 break;
-            case 3:
-                state_03();
+            case 3: state_03();
                 break;
-            case 4:
-                state_04();
+            case 4: state_04();
                 break;
-            case 5:
-                state_05();
+            case 5: state_05();
                 break;
-            case 6:
-                state_06();
+            case 6: state_06();
                 break;
-            case 7:
-                state_07();
+            case 7: state_07();
                 break;
-            case 8:
-                state_08();
+            case 8: state_08();
                 break;
-            case 9:
-                state_09();
+            case 9: state_09();
                 break;
-            case 10:
-                state_10();
+            case 10: state_10();
                 break;
-            case 11:
-                state_11();
+            case 11: state_11();
                 break;
-            case 12:
-                state_12();
+            case 12: state_12();
                 break;
-            case 13:
-                state_13();
+            case 13: state_13();
                 break;
-            case 14:
-                state_14();
+            case 14: state_14();
                 break;
             default:
                 break;
