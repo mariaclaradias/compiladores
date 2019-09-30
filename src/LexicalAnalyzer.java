@@ -270,7 +270,6 @@ class LexicalAnalyzer {
         checkReturn();
 
         if (this.currentCharacter == '=') {
-            this.shouldReturnCharacter = true;
             this.nextState = 15;
         }
 
@@ -283,7 +282,6 @@ class LexicalAnalyzer {
         if (Character.isDigit(currentCharacter)) {
             this.nextState = 14;
         }
-
         updateLexeme();
     }
 
@@ -294,7 +292,6 @@ class LexicalAnalyzer {
             this.shouldReturnCharacter = true;
             this.nextState = 15;
         }
-
         updateLexeme();
     }
 
