@@ -86,6 +86,15 @@ class LexicalAnalyzer {
             case 11:
                 state_11();
                 break;
+            case 12:
+                state_12();
+                break;
+            case 13:
+                state_13();
+                break;
+            case 14:
+                state_14();
+                break;
             default:
                 break;
             }
@@ -147,7 +156,6 @@ class LexicalAnalyzer {
         } else if (Character.isLetterOrDigit(this.currentCharacter)) {
             this.nextState = 3;
         }
-
         updateLexeme();
     }
 
@@ -160,7 +168,6 @@ class LexicalAnalyzer {
             shouldReturnCharacter = true;
             this.nextState = 15;
         }
-
         updateLexeme();
     }
 
@@ -176,7 +183,6 @@ class LexicalAnalyzer {
                 this.nextState = 1;
             }
         }
-
         updateLexeme();
     }
 
@@ -188,7 +194,6 @@ class LexicalAnalyzer {
         if ((this.currentCharacter != '=')) {
             this.shouldReturnCharacter = true;
         }
-
         updateLexeme();
     }
 
@@ -201,7 +206,6 @@ class LexicalAnalyzer {
         } else {
             this.nextState = 7;
         }
-
         updateLexeme();
     }
 
@@ -213,7 +217,6 @@ class LexicalAnalyzer {
         } else if (this.currentCharacter == '*') {
             this.nextState = 8;
         }
-
         updateLexeme();
     }
 
@@ -227,7 +230,6 @@ class LexicalAnalyzer {
         } else if (this.currentCharacter == '/') {
             this.nextState = 0;
         }
-
         updateLexeme();
     }
 
@@ -237,7 +239,6 @@ class LexicalAnalyzer {
         if (this.currentCharacter == '\'') {
             this.nextState = 10;
         }
-
         updateLexeme();
     }
 
@@ -272,7 +273,6 @@ class LexicalAnalyzer {
         if (this.currentCharacter == '=') {
             this.nextState = 15;
         }
-
         updateLexeme();
     }
 
@@ -288,8 +288,7 @@ class LexicalAnalyzer {
     private void state_14() {
         checkReturn();
 
-        if (Character.isDigit(this.currentCharacter)) {
-            this.shouldReturnCharacter = true;
+        if (Character.isDigit(this.currentCharacter) || this.currentCharacter > 'A' && this.currentCharacter < 'F') {
             this.nextState = 15;
         }
         updateLexeme();
