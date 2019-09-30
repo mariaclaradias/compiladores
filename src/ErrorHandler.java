@@ -1,0 +1,7 @@
+/**
+ * ErrorHandler
+ */
+public class ErrorHandler {
+
+    
+}

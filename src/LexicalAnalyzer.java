@@ -24,6 +24,10 @@ class LexicalAnalyzer {
         this.nextState = 0;
     }
 
+    public Symbol getSymbol(){
+        return this.symbol;
+    }
+
     private void checkReturn(){
         try {
             if (this.shouldReturnCharacter){
@@ -36,58 +40,41 @@ class LexicalAnalyzer {
         }
     }
 
-    private Symbol AFD(){
+    private void AFD(){
         this.lexeme = "";
 
         while (this.nextState != 12){
             switch (this.nextState) {
-                case 0:
-                    state_00();                    
+                case 0: state_00();                    
                     break;
-                case 1:
-                    state_01();                    
+                case 1: state_01();                    
                     break;
-                case 2:
-                    state_02();                    
+                case 2: state_02();                    
                     break;
-                case 3:
-                    state_03();                    
+                case 3: state_03();                    
                     break;
-                case 4:
-                    state_04();                    
+                case 4: state_04();                    
                     break;
-                case 5:
-                    state_05();                    
+                case 5: state_05();                    
                     break;
-                case 6:
-                    state_06();                    
+                case 6: state_06();                    
                     break;
-                case 7:
-                    state_07();                    
+                case 7: state_07();                    
                     break;
-                case 8:
-                    state_08();                    
+                case 8: state_08();                    
                     break;
-                case 9:
-                    state_09();                    
+                case 9: state_09();                    
                     break;
-                case 10:
-                    state_10();                    
+                case 10: state_10();                    
                     break;
-                case 11:
-                    state_11();                    
-                    break;
-                case 12:
-                    state_12();                    
+                case 11: state_11();                                       
                     break;
                 default:
                     break;
             }
-
         }
 
-        ();
-        return this.symbol;
+        this.symbol = new Symbol();
     }
 
     private void state_00(){
@@ -99,20 +86,25 @@ class LexicalAnalyzer {
             this.nextState = 4;
         } else if (Character.isLetter(this.currentCharacter)){
             this.nextState = 1;
-        } else if (this.currentCharacter == '_'){
-            this.nextState = 2;
-        } else if (this.currentCharacter == '<' || this.currentCharacter == '>' || this.currentCharacter == '='){
-            this.nextState = 5;
-        } else if (this.currentCharacter == '/'){
-            this.nextState = 6;
-        } else if (this.currentCharacter == ' '){
-            this.nextState = 0;
-        } else if (this.currentCharacter == '\n'){
-            this.currentLine++;
-        } else if (this.currentCharacter == null) {
-            this.endOfFile = true;
+        } 
+        
+        if(ALLOWED_CHARACTERS.contains(this.currentCharacter){
+            if (this.currentCharacter == '_'){
+                this.nextState = 2;
+            } else if (this.currentCharacter == '<' || this.currentCharacter == '>' || this.currentCharacter == '='){
+                this.nextState = 5;
+            } else if (this.currentCharacter == '/'){
+                this.nextState = 6;
+            } else if (this.currentCharacter == ' '){
+                this.nextState = 0;
+            } else if (this.currentCharacter == '\n'){
+                this.currentLine++;
+            } else if (this.currentCharacter == '\''){ 
+                this.nextState = 9;
+            {
+                this.nextState = 13;
+            }        
         }
-
         this.lexeme += this.currentCharacter;
     }
 
