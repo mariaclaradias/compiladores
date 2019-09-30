@@ -29,6 +29,10 @@ class LexicalAnalyzer {
         return this.symbol;
     }
 
+    public boolean isEndOfFile(){
+        return this.endOfFile;
+    }
+
     private void checkReturn() {
         try {
             if (this.shouldReturnCharacter) {
@@ -91,8 +95,13 @@ class LexicalAnalyzer {
             }
         }
 
+        checkLexeme();
+
         this.symbol = new Symbol();
     }
+
+
+    
 
     private void state_00() {
         this.lexeme = "";
