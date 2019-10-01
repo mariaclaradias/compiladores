@@ -23,7 +23,7 @@ public class SyntaxAnalyzer {
             symbol = lexicalAnalyzer.getSymbol();
         } else {
             if (lexicalAnalyzer.isEndOfFile()) {
-                ErrorHandler.
+                //ErrorHandler.
             } else {
                 // token n esperado
             }

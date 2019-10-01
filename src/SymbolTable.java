@@ -111,6 +111,18 @@ public class SymbolTable {
     }
 
     /**
+     * 
+     * @param lexeme
+     * @param type
+     * @return
+     */
+    public Symbol insertConst(String lexeme, byte type) {
+        Symbol symbol = new Symbol(CONST, lexeme, type);
+        hashTable.put(lexeme, symbol);
+        return symbol;
+    }
+
+    /**
      * Print all the items of the table
      */
     public void showSymbolsTable() {

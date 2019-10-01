@@ -5,6 +5,13 @@
             "name": "CodeLens (Launch) - Main",
             "request": "launch",
             "mainClass": "Main",
+            "projectName": "compiladores_c8754be4"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - Main",
+            "request": "launch",
+            "mainClass": "Main",
             "projectName": "Compiladores_cad912ff"
         }
     ]

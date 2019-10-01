@@ -7,21 +7,12 @@ public class ErrorHandler {
     public static String INVALID_LEXEME = "Unexpected lexeme";
     public static String END_OF_FILE = "Unexpected end of file";
     public static String INVALID_TOKEN = "Unexpected token";
+    public static String READING_ERROR = "Reading error";
 
-    public static void Print(String message, long line, String lexeme){
+    public static void print(String message, long line, String lexeme) {
 
-        
-        switch (message) {
-            case "INVALID_CHARACTER":
-                message = 
-                break;
-        
-            default:
-                break;
-        }
-        
-        String menssageLexeme = lexeme == null ? "" : " [" + lexeme + "]";
-        System.out.println(line + ":" + message + menssageLexeme);
+        String messageLexeme = lexeme == null ? "" : " [" + lexeme + "]";
+        System.out.println(line + ":" + message + messageLexeme);
         System.exit(0);
-    }    
+    }
 }

@@ -34,6 +34,11 @@ public class Main {
       } else {
         System.out.println("File found!");
         file = new BufferedReader(new FileReader(name));
+
+        LexicalAnalyzer LA = new LexicalAnalyzer(file);
+        LA.AFD();
+        System.out.println("Token: " + LA.getToken() + " " + LA.getLexeme());
+        
       }
     } catch (Exception e) {
       System.err.println("File not found");

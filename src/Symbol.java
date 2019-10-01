@@ -17,18 +17,26 @@ public class Symbol {
     public static final byte TYPE_INTEGER = 1;
     public static final byte TYPE_BYTE = 2;
     public static final byte TYPE_STRING = 3;
-    public static final byte TYPE_BOOLEAN = 4;
+
+    public Symbol() {
+
+    }
 
     public Symbol(byte token, String lexeme, byte type) {
         this.token = token;
         this.lexeme = lexeme;
         this.type = type;
     }
-    
+
+    public Symbol(byte token, String lexeme) {
+        this.token = token;
+        this.lexeme = lexeme;
+    }
+
     public void setType(byte type) {
         this.type = type;
     }
-    
+
     public void setToken(byte token) {
         this.token = token;
     }
@@ -36,15 +44,15 @@ public class Symbol {
     public void setAddress(int address) {
         this.address = type;
     }
-    
+
     public void setLexeme(String lexeme) {
         this.lexeme = lexeme;
     }
-    
+
     public byte getToken() {
         return token;
     }
-    
+
     public byte getType() {
         return type;
     }
@@ -55,20 +63,5 @@ public class Symbol {
 
     public String getLexeme() {
         return lexeme;
-    }
-    
-    public Symbol() {
-
-    }
-
-    public Symbol(byte token, String lexeme) {
-        this.token = token;
-        this.lexeme = lexeme;
-    }
-
-    public Symbol(byte token, String lexeme, byte type, int size) {
-        this.token = token;
-        this.lexeme = lexeme;
-        this.type = type;
     }
 }
