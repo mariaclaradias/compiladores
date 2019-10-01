@@ -9,18 +9,13 @@ public class SyntaxAnalyzer {
 
     private LexicalAnalyzer lexicalAnalyzer;
 
-    private SymbolTable symbolTable;
-    private Symbol symbol;
-
-    private BufferedReader reader;
-
-    public SyntaxAnalyzer() {
-        this.lexicalAnalyzer = new LexicalAnalyzer(reader);
-        this.symbolTable = new SymbolTable();
+    public SyntaxAnalyzer(LexicalAnalyzer LA) {
+        this.lexicalAnalyzer = LA;
+        lexicalAnalyzer.AFD();
     }
 
     private void tokenMatch(byte expectedToken) {
-        if (symbol.getToken() == expectedToken) {
+        if (lexicalAnalyzer.getToken() == expectedToken) {
             lexicalAnalyzer.AFD();
         } else {
             if (lexicalAnalyzer.isEndOfFile()) {
@@ -31,7 +26,7 @@ public class SyntaxAnalyzer {
         }
     }
 
-    private void parser() {
+    public void parser() {
         while (lexicalAnalyzer.getToken() == SymbolTable.CONST || lexicalAnalyzer.getToken() == SymbolTable.ID
                 || lexicalAnalyzer.getToken() == SymbolTable.BOOLEAN || lexicalAnalyzer.getToken() == SymbolTable.BYTE
                 || lexicalAnalyzer.getToken() == SymbolTable.STRING
@@ -122,6 +117,9 @@ public class SyntaxAnalyzer {
             tokenMatch(SymbolTable.SEMICOLON);
         } else if (lexicalAnalyzer.getToken() == SymbolTable.SEMICOLON) {
             tokenMatch(SymbolTable.SEMICOLON);
+        } else {
+            ErrorHandler.print(ErrorHandler.INVALID_TOKEN, this.lexicalAnalyzer.getCurrentLine(),
+                    this.lexicalAnalyzer.getLexeme());
         }
     }
 
@@ -258,8 +256,10 @@ public class SyntaxAnalyzer {
             expression();
             tokenMatch(SymbolTable.CLOSE_PAR);
         } else if (lexicalAnalyzer.getToken() == SymbolTable.CONST) {
+            tokenMatch(SymbolTable.CONST);
             tokenMatch(SymbolTable.CLOSE_PAR);
         } else if (lexicalAnalyzer.getToken() == SymbolTable.ID) {
+            tokenMatch(SymbolTable.ID);
             tokenMatch(SymbolTable.CLOSE_PAR);
         }
     }

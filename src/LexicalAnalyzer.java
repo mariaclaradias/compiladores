@@ -15,8 +15,12 @@ class LexicalAnalyzer {
     private int nextState;
     private int finalState;
     private byte type;
-    private final List<Character> ALLOWED_CHARACTERS = new ArrayList<Character>(Arrays.asList('\n', ',', '.', '_', ' ',
-            ';', '&', ':', '(', ')', '[', ']', '{', '}', '-', '+', '\'', '"', '/', '!', '?', '>', '<', '='));
+    private final List<Character> ALLOWED_CHARACTERS = new ArrayList<Character>(
+            Arrays.asList('\n', ',', '.', '_', ' ', ';', '&', ':', '(', ')', '[', ']', '{', '}', '-', '+', '\'', '"',
+                    '/', '!', '?', '>', '<', '=', '\t', '\r'));
+    private final List<Character> IGNORED_CHARACTERS = new ArrayList<Character>(Arrays.asList('\n', '\t', ' ', '\r'));
+    // private final List<Integer> IGNORED_CHARACTERS = new
+    // ArrayList<Integer>(Arrays.asList(9, 13, 10, 32));
 
     public LexicalAnalyzer(BufferedReader reader) {
         this.reader = reader;
@@ -66,7 +70,9 @@ class LexicalAnalyzer {
                     this.symbol = table.insertID(this.lexeme, this.type);
                 }
             }
+            this.symbol = this.table.searchLexeme(lexeme);
         }
+
     }
 
     private void checkReturn() {
@@ -136,11 +142,8 @@ class LexicalAnalyzer {
             }
         }
 
+        this.nextState = 0;
         checkLexeme();
-
-        this.table.showSymbolsTable();
-
-        this.symbol = new Symbol();
     }
 
     private void state_00() {
@@ -160,13 +163,12 @@ class LexicalAnalyzer {
             this.nextState = 9;
         } else if (this.currentCharacter == '/') {
             this.nextState = 4;
-        } else if (this.currentCharacter == ' ') {
-            this.nextState = 0;
-        } else if (this.currentCharacter == '\n') {
-            this.currentLine++;
-            this.nextState = 0; // TODO: ???
         } else if (this.currentCharacter == '!') {
             this.nextState = 12;
+        } else if (this.IGNORED_CHARACTERS.contains(this.currentCharacter)) {
+            if (this.currentCharacter == '\n')
+                this.currentLine++;
+            this.nextState = 0;
         } else {
             this.nextState = this.finalState;
         }
@@ -183,7 +185,7 @@ class LexicalAnalyzer {
             this.shouldReturnCharacter = true;
             this.nextState = this.finalState;
         }
-        
+
     }
 
     private void state_02() {

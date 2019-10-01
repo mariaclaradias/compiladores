@@ -44,6 +44,7 @@ public class SymbolTable {
     public static final byte DIV = 34;
     public static final byte SEMICOLON = 35;
     public static final byte APOSTROPHE = 36;
+    public static final byte EOF = 37;
 
     public HashMap<String, Symbol> hashTable = new HashMap<>();
 
