@@ -14,6 +14,7 @@ public class SyntaxAnalyzer {
 
     public SyntaxAnalyzer(){
         this.lexicalAnalyzer = new LexicalAnalyzer(reader);
+        this.symbolTable = new SymbolTable();
     }
 
 
@@ -29,7 +30,11 @@ public class SyntaxAnalyzer {
         }
     }
 
-    private void descendentParser(){}
+    private void parser(){
+        while(lexicalAnalyzer.getToken() == symbolTable.INTEGER){
+
+        }
+    }
 
     private void instruction(){}
 

@@ -29,12 +29,28 @@ class LexicalAnalyzer {
         return this.symbol;
     }
 
+    public byte getToken() {
+        return this.symbol.getToken();
+    }
+
     public int getCurrentLine(){
         return this.currentLine;
     }
 
     public boolean isEndOfFile(){
         return this.endOfFile;
+    }
+
+    private void checkLexeme(){
+        if (!this.endOfFile) {
+            if (this.table.searchLexeme(lexeme) == null) {
+                if (this.lexeme.charAt(0) == '\'' || Character.isDigit(lexeme.charAt(0))) {
+                    this.symbol = table.
+                }
+            } else {
+
+            }
+        }
     }
 
     private void checkReturn() {
@@ -97,8 +113,6 @@ class LexicalAnalyzer {
 
         this.symbol = new Symbol();
     }
-
-
     
 
     private void state_00() {

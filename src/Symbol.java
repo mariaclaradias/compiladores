@@ -10,13 +10,8 @@ public class Symbol {
 
     private byte token;
     private byte type;
-    private byte category;
-    private int size;
     private int address;
     private String lexeme;
-
-    public static final byte NO_CATEGORY = 0;
-    public static final byte CATEGORY_CONST = 1;
 
     public static final byte NO_TYPE = 0;
     public static final byte TYPE_INTEGER = 1;
@@ -28,13 +23,6 @@ public class Symbol {
         this.token = token;
         this.lexeme = lexeme;
         this.type = type;
-        this.category = NO_CATEGORY;
-        this.size = -1;
-    }
-
-    
-    public void setCategory(byte category) {
-        this.category = category;
     }
     
     public void setType(byte type) {
@@ -44,9 +32,7 @@ public class Symbol {
     public void setToken(byte token) {
         this.token = token;
     }
-    public void setSize(byte size) {
-        this.size = size;
-    }
+
     public void setAddress(int address) {
         this.address = type;
     }
@@ -57,14 +43,6 @@ public class Symbol {
     
     public byte getToken() {
         return token;
-    }
-
-    public byte getCategory() {
-        return category;
-    }
-
-    public int getSize() {
-        return size;
     }
     
     public byte getType() {
@@ -92,7 +70,5 @@ public class Symbol {
         this.token = token;
         this.lexeme = lexeme;
         this.type = type;
-        this.category = NO_CATEGORY;
-        this.size = size;
     }
 }
