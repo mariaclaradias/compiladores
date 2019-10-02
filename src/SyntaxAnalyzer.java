@@ -46,11 +46,13 @@ public class SyntaxAnalyzer {
     }
 
     private void instruction() {
+        // TYPE id 
         if (lexicalAnalyzer.getToken() == SymbolTable.INTEGER || lexicalAnalyzer.getToken() == SymbolTable.BOOLEAN
                 || lexicalAnalyzer.getToken() == SymbolTable.BYTE || lexicalAnalyzer.getToken() == SymbolTable.STRING) {
             types();
             tokenMatch(SymbolTable.ID);
 
+            // TYPE id = [(+|-)] VALUE
             if (lexicalAnalyzer.getToken() == SymbolTable.EQUAL) {
                 tokenMatch(SymbolTable.EQUAL);
                 if (lexicalAnalyzer.getToken() == SymbolTable.ADD) {
@@ -58,32 +60,40 @@ public class SyntaxAnalyzer {
                 } else if (lexicalAnalyzer.getToken() == SymbolTable.SUB) {
                     tokenMatch(SymbolTable.SUB);
                 }
-                expression();
+                tokenMatch(SymbolTable.VALUE);
             }
 
+            // ...{, id [= [(+|-)] VALUE]}*; 
             while (lexicalAnalyzer.getToken() == SymbolTable.COMMA) {
                 tokenMatch(SymbolTable.COMMA);
                 tokenMatch(SymbolTable.ID);
 
-                if (lexicalAnalyzer.getToken() == SymbolTable.ADD) {
-                    tokenMatch(SymbolTable.ADD);
-                } else if (lexicalAnalyzer.getToken() == SymbolTable.SUB) {
-                    tokenMatch(SymbolTable.SUB);
+                if (lexicalAnalyzer.getToken() == SymbolTable.EQUAL) {
+                    if (lexicalAnalyzer.getToken() == SymbolTable.ADD) {
+                        tokenMatch(SymbolTable.ADD);
+                    } else if (lexicalAnalyzer.getToken() == SymbolTable.SUB) {
+                        tokenMatch(SymbolTable.SUB);
+                    }
+                    tokenMatch(SymbolTable.VALUE);
                 }
-                expression();
             }
-
             tokenMatch(SymbolTable.SEMICOLON);
+
+        // CONST id = [(+|-)] VALUE; 
         } else if (lexicalAnalyzer.getToken() == SymbolTable.CONST) {
+            tokenMatch(SymbolTable.CONST);
             tokenMatch(SymbolTable.ID);
             tokenMatch(SymbolTable.EQUAL);
+            
             if (lexicalAnalyzer.getToken() == SymbolTable.ADD) {
                 tokenMatch(SymbolTable.ADD);
             } else if (lexicalAnalyzer.getToken() == SymbolTable.SUB) {
                 tokenMatch(SymbolTable.SUB);
             }
-            expression();
+            tokenMatch(SymbolTable.VALUE);
             tokenMatch(SymbolTable.SEMICOLON);
+
+        // id = [(+|-)] VALUE;
         } else if (lexicalAnalyzer.getToken() == SymbolTable.ID) {
             tokenMatch(SymbolTable.EQUAL);
             if (lexicalAnalyzer.getToken() == SymbolTable.ADD) {
@@ -91,7 +101,7 @@ public class SyntaxAnalyzer {
             } else if (lexicalAnalyzer.getToken() == SymbolTable.SUB) {
                 tokenMatch(SymbolTable.SUB);
             }
-            expression();
+            tokenMatch(SymbolTable.VALUE);
             tokenMatch(SymbolTable.SEMICOLON);
         }
     }
@@ -107,6 +117,7 @@ public class SyntaxAnalyzer {
                 || lexicalAnalyzer.getToken() == SymbolTable.WRITELN) {
             write();
         } else if (lexicalAnalyzer.getToken() == SymbolTable.ID) {
+            tokenMatch(SymbolTable.ID);
             tokenMatch(SymbolTable.EQUAL);
             if (lexicalAnalyzer.getToken() == SymbolTable.ADD) {
                 tokenMatch(SymbolTable.ADD);
@@ -204,7 +215,7 @@ public class SyntaxAnalyzer {
     private void expression() {
         if (lexicalAnalyzer.getToken() == SymbolTable.ADD || lexicalAnalyzer.getToken() == SymbolTable.SUB
                 || lexicalAnalyzer.getToken() == SymbolTable.NOT || lexicalAnalyzer.getToken() == SymbolTable.OPEN_PAR
-                || lexicalAnalyzer.getToken() == SymbolTable.CONST || lexicalAnalyzer.getToken() == SymbolTable.ID) {
+                || lexicalAnalyzer.getToken() == SymbolTable.VALUE || lexicalAnalyzer.getToken() == SymbolTable.ID) {
             expressionPrecedence_3();
             if (lexicalAnalyzer.getToken() == SymbolTable.EQUAL_TO
                     || lexicalAnalyzer.getToken() == SymbolTable.NOT_EQUAL
@@ -222,7 +233,7 @@ public class SyntaxAnalyzer {
     private void expressionPrecedence_3() {
         if (lexicalAnalyzer.getToken() == SymbolTable.ADD || lexicalAnalyzer.getToken() == SymbolTable.SUB
                 || lexicalAnalyzer.getToken() == SymbolTable.NOT || lexicalAnalyzer.getToken() == SymbolTable.OPEN_PAR
-                || lexicalAnalyzer.getToken() == SymbolTable.CONST || lexicalAnalyzer.getToken() == SymbolTable.ID) {
+                || lexicalAnalyzer.getToken() == SymbolTable.VALUE || lexicalAnalyzer.getToken() == SymbolTable.ID) {
             if (lexicalAnalyzer.getToken() == SymbolTable.ADD || lexicalAnalyzer.getToken() == SymbolTable.SUB) {
                 tokenMatch(lexicalAnalyzer.getToken());
             }
@@ -237,7 +248,7 @@ public class SyntaxAnalyzer {
 
     private void expressionPrecedence_2() {
         if (lexicalAnalyzer.getToken() == SymbolTable.NOT || lexicalAnalyzer.getToken() == SymbolTable.OPEN_PAR
-                || lexicalAnalyzer.getToken() == SymbolTable.CONST || lexicalAnalyzer.getToken() == SymbolTable.ID) {
+                || lexicalAnalyzer.getToken() == SymbolTable.VALUE || lexicalAnalyzer.getToken() == SymbolTable.ID) {
             expressionPrecedence_1();
             while (lexicalAnalyzer.getToken() == SymbolTable.MULT || lexicalAnalyzer.getToken() == SymbolTable.DIV
                     || lexicalAnalyzer.getToken() == SymbolTable.AND) {
@@ -255,12 +266,10 @@ public class SyntaxAnalyzer {
             tokenMatch(SymbolTable.OPEN_PAR);
             expression();
             tokenMatch(SymbolTable.CLOSE_PAR);
-        } else if (lexicalAnalyzer.getToken() == SymbolTable.CONST) {
-            tokenMatch(SymbolTable.CONST);
-            tokenMatch(SymbolTable.CLOSE_PAR);
+        } else if (lexicalAnalyzer.getToken() == SymbolTable.VALUE) {
+            tokenMatch(SymbolTable.VALUE);
         } else if (lexicalAnalyzer.getToken() == SymbolTable.ID) {
             tokenMatch(SymbolTable.ID);
-            tokenMatch(SymbolTable.CLOSE_PAR);
         }
     }
 

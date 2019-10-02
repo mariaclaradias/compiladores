@@ -45,6 +45,10 @@ class LexicalAnalyzer {
         return this.lexeme;
     }
 
+    public SymbolTable getSymbolTable(){
+        return this.table;
+    }
+
     public int getCurrentLine() {
         return this.currentLine;
     }
@@ -57,20 +61,28 @@ class LexicalAnalyzer {
         if (this.ALLOWED_CHARACTERS.contains(this.currentCharacter)
                 || Character.isLetterOrDigit(this.currentCharacter)) {
             return;
-        }
-        ErrorHandler.print(ErrorHandler.INVALID_CHARACTER, this.currentLine, this.lexeme);
+        }else if (this.currentCharacter == '\u001a' || this.currentCharacter == 65535) {
+            this.endOfFile = true;
+        }else{
+            ErrorHandler.print(ErrorHandler.INVALID_CHARACTER, this.currentLine, this.lexeme);
+        }  
     }
 
     private void checkLexeme() {
         if (!this.endOfFile) {
             if (this.table.searchLexeme(lexeme) == null) {
-                if (this.lexeme.charAt(0) == '\'' || Character.isDigit(this.lexeme.charAt(0))) {
-                    this.symbol = table.insertConst(this.lexeme, this.type);
+                if (this.lexeme.equals("false") || this.lexeme.equals("true")){
+                    this.type = Symbol.TYPE_BOOLEAN;
+                    this.symbol = table.insertValue(this.lexeme, this.type);
+                } else if (this.lexeme.charAt(0) == '\'' || Character.isDigit(this.lexeme.charAt(0))) {
+                    this.symbol = table.insertValue(this.lexeme, this.type);
                 } else {
                     this.symbol = table.insertID(this.lexeme, this.type);
                 }
             }
             this.symbol = this.table.searchLexeme(lexeme);
+        } else {
+          //  System.exit(0);
         }
 
     }
@@ -134,8 +146,7 @@ class LexicalAnalyzer {
             case 11:
                 state_11();
                 break;
-            case 12:
-                state_12();
+            case 12: state_12();
                 break;
             default:
                 break;

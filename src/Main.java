@@ -38,6 +38,8 @@ public class Main {
         LexicalAnalyzer LA = new LexicalAnalyzer(file);
         SyntaxAnalyzer SA = new SyntaxAnalyzer(LA);
         SA.parser();
+        LA.getSymbolTable().showSymbolsTable();
+
 
       }
     } catch (Exception e) {

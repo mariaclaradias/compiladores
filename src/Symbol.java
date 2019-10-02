@@ -17,6 +17,7 @@ public class Symbol {
     public static final byte TYPE_INTEGER = 1;
     public static final byte TYPE_BYTE = 2;
     public static final byte TYPE_STRING = 3;
+    public static final byte TYPE_BOOLEAN = 4;
 
     public Symbol() {
 

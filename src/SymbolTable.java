@@ -44,7 +44,8 @@ public class SymbolTable {
     public static final byte DIV = 34;
     public static final byte SEMICOLON = 35;
     public static final byte APOSTROPHE = 36;
-    public static final byte EOF = 37;
+    public static final byte VALUE = 37;
+    public static final byte EOF = 38;
 
     public HashMap<String, Symbol> hashTable = new HashMap<>();
 
@@ -89,7 +90,7 @@ public class SymbolTable {
         hashTable.put("*", new Symbol(MULT, "*"));
         hashTable.put("/", new Symbol(DIV, "/"));
         hashTable.put(";", new Symbol(SEMICOLON, ";"));
-        hashTable.put(";", new Symbol(APOSTROPHE, "'"));
+        hashTable.put("\'", new Symbol(APOSTROPHE, "'"));
     }
 
     /**
@@ -117,8 +118,8 @@ public class SymbolTable {
      * @param type
      * @return
      */
-    public Symbol insertConst(String lexeme, byte type) {
-        Symbol symbol = new Symbol(CONST, lexeme, type);
+    public Symbol insertValue(String lexeme, byte type) {
+        Symbol symbol = new Symbol(VALUE, lexeme, type);
         hashTable.put(lexeme, symbol);
         return symbol;
     }
