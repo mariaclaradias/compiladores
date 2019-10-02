@@ -7,17 +7,6 @@ public class Main {
 
   public static void main(String[] args) {
     readFile();
-    // SymbolTable table = new SymbolTable();
-
-    // table.insertID("age", (byte) 1);
-    // table.insertID("name", (byte) 3);
-
-    // table.showSymbolsTable();
-
-    // Symbol sym = tabela.searchLexeme("id");
-    // System.out
-    // .println("Token: " + sym.getToken() + ", Lexeme: " + sym.getLexeme()
-    // + ", Type: " + sym.getType());
   }
 
   public static void readFile() {
@@ -39,7 +28,6 @@ public class Main {
         SyntaxAnalyzer SA = new SyntaxAnalyzer(LA);
         SA.parser();
         LA.getSymbolTable().showSymbolsTable();
-
 
       }
     } catch (Exception e) {

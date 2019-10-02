@@ -3,7 +3,9 @@
  * @author Maria Clara Dias
  * @author Pedro Pimenta
  * 
- *         Class Symbol {@summary} Basic structure and features of a Symbol.
+ * Class Symbol
+ * 
+ * Basic structure and features of a Symbol.
  */
 
 public class Symbol {

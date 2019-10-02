@@ -4,6 +4,10 @@ import java.util.HashMap;
  * @author Jorge Oliveira
  * @author Maria Clara Dias
  * @author Pedro Pimenta
+ * 
+ * SymbolTable
+ * 
+ * Holds all the information of Symbols from the language.
  */
 
 public class SymbolTable {

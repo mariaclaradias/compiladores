@@ -1,6 +1,13 @@
 /**
- * ErrorHandler
+ * @author Jorge Oliveira
+ * @author Maria Clara Dias
+ * @author Pedro Pimenta
+ * 
+ * Class ErrorHandler
+ * 
+ * Handles the error messages.
  */
+
 public class ErrorHandler {
 
     public static String INVALID_CHARACTER = "Unexpected character";
@@ -9,7 +16,6 @@ public class ErrorHandler {
     public static String INVALID_TOKEN = "Unexpected token";
     public static String READING_ERROR = "Reading error";
     public static String NO_COMMAND = "Expected at least one command in the main function";
-
 
     public static void print(String message, long line, String lexeme) {
 

@@ -1,9 +1,12 @@
-
 /**
- * SyntaxAnalyzer
+ * @author Jorge Oliveira
+ * @author Maria Clara Dias
+ * @author Pedro Pimenta
+ * 
+ * Syntax Analyzer
+ * 
+ * Handles the syntatic behaviour of the language.
  */
-
-import java.io.*;
 
 public class SyntaxAnalyzer {
 
@@ -45,9 +48,8 @@ public class SyntaxAnalyzer {
         tokenMatch(SymbolTable.END);
     }
 
-
     private void instruction() {
-        // TYPE id 
+        // TYPE id
         if (lexicalAnalyzer.getToken() == SymbolTable.INTEGER || lexicalAnalyzer.getToken() == SymbolTable.BOOLEAN
                 || lexicalAnalyzer.getToken() == SymbolTable.BYTE || lexicalAnalyzer.getToken() == SymbolTable.STRING) {
             types();
@@ -64,7 +66,7 @@ public class SyntaxAnalyzer {
                 tokenMatch(SymbolTable.VALUE);
             }
 
-            // ...{, id [= [(+|-)] VALUE]}*; 
+            // ...{, id [= [(+|-)] VALUE]}*;
             while (lexicalAnalyzer.getToken() == SymbolTable.COMMA) {
                 tokenMatch(SymbolTable.COMMA);
                 tokenMatch(SymbolTable.ID);
@@ -81,12 +83,12 @@ public class SyntaxAnalyzer {
             }
             tokenMatch(SymbolTable.SEMICOLON);
 
-        // CONST id = [(+|-)] VALUE; 
+            // CONST id = [(+|-)] VALUE;
         } else if (lexicalAnalyzer.getToken() == SymbolTable.CONST) {
             tokenMatch(SymbolTable.CONST);
             tokenMatch(SymbolTable.ID);
             tokenMatch(SymbolTable.EQUAL);
-            
+
             if (lexicalAnalyzer.getToken() == SymbolTable.ADD) {
                 tokenMatch(SymbolTable.ADD);
             } else if (lexicalAnalyzer.getToken() == SymbolTable.SUB) {
@@ -95,9 +97,9 @@ public class SyntaxAnalyzer {
             tokenMatch(SymbolTable.VALUE);
             tokenMatch(SymbolTable.SEMICOLON);
 
-        // id = [(+|-)] VALUE;
+            // id = [(+|-)] VALUE;
         } else if (lexicalAnalyzer.getToken() == SymbolTable.ID) {
-             tokenMatch(SymbolTable.EQUAL);
+            tokenMatch(SymbolTable.EQUAL);
             if (lexicalAnalyzer.getToken() == SymbolTable.ADD) {
                 tokenMatch(SymbolTable.ADD);
             } else if (lexicalAnalyzer.getToken() == SymbolTable.SUB) {
@@ -131,7 +133,7 @@ public class SyntaxAnalyzer {
         } else if (lexicalAnalyzer.getToken() == SymbolTable.SEMICOLON) {
             tokenMatch(SymbolTable.SEMICOLON);
         } else if (lexicalAnalyzer.getToken() == SymbolTable.END) {
-            ErrorHandler.print(ErrorHandler.NO_COMMAND,  this.lexicalAnalyzer.getCurrentLine(),  "");
+            ErrorHandler.print(ErrorHandler.NO_COMMAND, this.lexicalAnalyzer.getCurrentLine(), "");
         }
     }
 

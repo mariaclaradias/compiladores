@@ -1,3 +1,13 @@
+/**
+ * @author Jorge Oliveira
+ * @author Maria Clara Dias
+ * @author Pedro Pimenta
+ * 
+ * Class LexicalAnalyzer
+ * 
+ * Handles the identification of language tokens.
+ */
+
 import java.io.BufferedReader;
 import java.util.*;
 
@@ -16,10 +26,9 @@ class LexicalAnalyzer {
     private int finalState;
     private byte type;
     private final List<Character> ALLOWED_CHARACTERS = new ArrayList<Character>(
-            Arrays.asList('\n', ',', '.', '_', ' ', ';', '&', ':', '(', ')', '[', ']', '{', '}', '-', '+', '\'', '"', '*', '/', '!', '?', '>', '<', '=', '\t', '\r'));
+            Arrays.asList('\n', ',', '.', '_', ' ', ';', '&', ':', '(', ')', '[', ']', '{', '}', '-', '+', '\'', '"',
+                    '*', '/', '!', '?', '>', '<', '=', '\t', '\r'));
     private final List<Character> IGNORED_CHARACTERS = new ArrayList<Character>(Arrays.asList('\n', '\t', ' ', '\r'));
-    // private final List<Integer> IGNORED_CHARACTERS = new
-    // ArrayList<Integer>(Arrays.asList(9, 13, 10, 32));
 
     public LexicalAnalyzer(BufferedReader reader) {
         this.reader = reader;
@@ -44,7 +53,7 @@ class LexicalAnalyzer {
         return this.lexeme;
     }
 
-    public SymbolTable getSymbolTable(){
+    public SymbolTable getSymbolTable() {
         return this.table;
     }
 
@@ -59,8 +68,8 @@ class LexicalAnalyzer {
     private void checkError() {
         if (this.ALLOWED_CHARACTERS.contains(this.currentCharacter)
                 || Character.isLetterOrDigit(this.currentCharacter)) {
-            return;     
-        }else if((int) this.currentCharacter == 65535){
+            return;
+        } else if ((int) this.currentCharacter == 65535) {
             this.endOfFile = true;
             this.nextState = this.finalState;
         } else {
@@ -71,19 +80,19 @@ class LexicalAnalyzer {
     private void checkLexeme() {
         if (!this.endOfFile) {
             if (this.table.searchLexeme(lexeme) == null) {
-                
+
                 if (this.lexeme.charAt(0) == '\'' || Character.isDigit(this.lexeme.charAt(0))) {
                     this.symbol = table.insertValue(this.lexeme, this.type);
                 } else {
                     this.symbol = table.insertID(this.lexeme, this.type);
                 }
-            } else if (this.lexeme.equals("false") || this.lexeme.equals("true")){
+            } else if (this.lexeme.equals("false") || this.lexeme.equals("true")) {
                 this.type = Symbol.TYPE_BOOLEAN;
                 this.symbol = table.insertValue(this.lexeme, this.type);
             } else {
                 this.symbol = this.table.searchLexeme(lexeme);
             }
-            //System.exit(0);
+            // System.exit(0);
         }
     }
 
@@ -165,7 +174,7 @@ class LexicalAnalyzer {
             this.nextState = 4;
         } else if (this.currentCharacter == '!') {
             this.nextState = 12;
-        }else if (this.currentCharacter == '_') {
+        } else if (this.currentCharacter == '_') {
             this.nextState = 13;
         } else if (this.IGNORED_CHARACTERS.contains(this.currentCharacter)) {
             if (this.currentCharacter == '\n')
@@ -195,13 +204,13 @@ class LexicalAnalyzer {
 
         if (Character.isDigit(this.currentCharacter)) {
             this.nextState = 7;
-            updateLexeme();            
+            updateLexeme();
         } else if (Character.isLetter(this.currentCharacter)) {
             if (this.currentCharacter == 'h' || this.currentCharacter == 'H') {
                 this.nextState = 10;
                 updateLexeme();
             }
-        } else if (this.ALLOWED_CHARACTERS.contains(this.currentCharacter)){
+        } else if (this.ALLOWED_CHARACTERS.contains(this.currentCharacter)) {
             this.shouldReturnCharacter = true;
             this.nextState = this.finalState;
         }
@@ -235,9 +244,9 @@ class LexicalAnalyzer {
 
         if (this.currentCharacter == '*') {
             this.nextState = 6;
-        } else if(this.endOfFile == true) {
+        } else if (this.endOfFile == true) {
             ErrorHandler.print(ErrorHandler.END_OF_FILE, this.getCurrentLine(), this.lexeme);
-        }else{
+        } else {
             this.nextState = 5;
         }
         updateLexeme();
@@ -263,7 +272,7 @@ class LexicalAnalyzer {
             this.nextState = 7;
             updateLexeme();
         } else if (Character.isLetter(this.currentCharacter) || this.currentCharacter == '_') {
-           ErrorHandler.print(ErrorHandler.INVALID_CHARACTER, this.currentLine, this.lexeme);
+            ErrorHandler.print(ErrorHandler.INVALID_CHARACTER, this.currentLine, this.lexeme);
         } else {
             this.type = Symbol.TYPE_INTEGER;
             this.shouldReturnCharacter = true;
@@ -332,7 +341,7 @@ class LexicalAnalyzer {
 
         if (Character.isLetterOrDigit(this.currentCharacter)) {
             this.nextState = 1;
-        } else if(this.currentCharacter == '_'){
+        } else if (this.currentCharacter == '_') {
             this.nextState = 13;
         } else {
             ErrorHandler.print(ErrorHandler.INVALID_TOKEN, this.currentLine, this.lexeme);
