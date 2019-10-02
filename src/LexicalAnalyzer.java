@@ -16,8 +16,7 @@ class LexicalAnalyzer {
     private int finalState;
     private byte type;
     private final List<Character> ALLOWED_CHARACTERS = new ArrayList<Character>(
-            Arrays.asList('\n', ',', '.', '_', ' ', ';', '&', ':', '(', ')', '[', ']', '{', '}', '-', '+', '\'', '"',
-                    '/', '!', '?', '>', '<', '=', '\t', '\r'));
+            Arrays.asList('\n', ',', '.', '_', ' ', ';', '&', ':', '(', ')', '[', ']', '{', '}', '-', '+', '\'', '"', '*', '/', '!', '?', '>', '<', '=', '\t', '\r'));
     private final List<Character> IGNORED_CHARACTERS = new ArrayList<Character>(Arrays.asList('\n', '\t', ' ', '\r'));
     // private final List<Integer> IGNORED_CHARACTERS = new
     // ArrayList<Integer>(Arrays.asList(9, 13, 10, 32));
@@ -60,10 +59,8 @@ class LexicalAnalyzer {
     private void checkError() {
         if (this.ALLOWED_CHARACTERS.contains(this.currentCharacter)
                 || Character.isLetterOrDigit(this.currentCharacter)) {
-            return;
-        }else if (this.currentCharacter == '\u001a' || this.currentCharacter == 65535) {
-            this.endOfFile = true;
-        }else{
+            return;     
+        }else {
             ErrorHandler.print(ErrorHandler.INVALID_CHARACTER, this.currentLine, this.lexeme);
         }  
     }
@@ -71,20 +68,21 @@ class LexicalAnalyzer {
     private void checkLexeme() {
         if (!this.endOfFile) {
             if (this.table.searchLexeme(lexeme) == null) {
-                if (this.lexeme.equals("false") || this.lexeme.equals("true")){
-                    this.type = Symbol.TYPE_BOOLEAN;
-                    this.symbol = table.insertValue(this.lexeme, this.type);
-                } else if (this.lexeme.charAt(0) == '\'' || Character.isDigit(this.lexeme.charAt(0))) {
+                
+                if (this.lexeme.charAt(0) == '\'' || Character.isDigit(this.lexeme.charAt(0))) {
                     this.symbol = table.insertValue(this.lexeme, this.type);
                 } else {
                     this.symbol = table.insertID(this.lexeme, this.type);
                 }
             }
+            if (this.lexeme.equals("false") || this.lexeme.equals("true")){
+                this.type = Symbol.TYPE_BOOLEAN;
+                this.symbol = table.insertValue(this.lexeme, this.type);
+            }
             this.symbol = this.table.searchLexeme(lexeme);
-        } else {
-          //  System.exit(0);
+        
+            //System.exit(0);
         }
-
     }
 
     private void checkReturn() {
@@ -110,41 +108,29 @@ class LexicalAnalyzer {
 
         while (this.nextState != this.finalState) {
             switch (this.nextState) {
-            case 0:
-                state_00();
+            case 0: state_00();
                 break;
-            case 1:
-                state_01();
+            case 1: state_01();
                 break;
-            case 2:
-                state_02();
+            case 2: state_02();
                 break;
-            case 3:
-                state_03();
+            case 3: state_03();
                 break;
-            case 4:
-                state_04();
+            case 4: state_04();
                 break;
-            case 5:
-                state_05();
+            case 5: state_05();
                 break;
-            case 6:
-                state_06();
+            case 6: state_06();
                 break;
-            case 7:
-                state_07();
+            case 7: state_07();
                 break;
-            case 8:
-                state_08();
+            case 8: state_08();
                 break;
-            case 9:
-                state_09();
+            case 9: state_09();
                 break;
-            case 10:
-                state_10();
+            case 10: state_10();
                 break;
-            case 11:
-                state_11();
+            case 11: state_11();
                 break;
             case 12: state_12();
                 break;
@@ -162,7 +148,7 @@ class LexicalAnalyzer {
 
         checkReturn();
 
-        if (Character.isDigit(this.currentCharacter)) {
+        if (Character.isDigit(this.currentCharacter) && this.currentCharacter != '0') {
             this.nextState = 7;
         } else if (Character.isLetter(this.currentCharacter)) {
             this.nextState = 1;
@@ -208,6 +194,9 @@ class LexicalAnalyzer {
             if (this.currentCharacter == 'h' || this.currentCharacter == 'H') {
                 this.nextState = 10;
             }
+        } else if (this.ALLOWED_CHARACTERS.contains(this.currentCharacter)){
+            this.shouldReturnCharacter = true;
+            this.nextState = this.finalState;
         }
         updateLexeme();
     }
@@ -299,9 +288,9 @@ class LexicalAnalyzer {
     private void state_10() {
         checkReturn();
 
-        if ((this.currentCharacter > '0' && this.currentCharacter < '9')
-                || (this.currentCharacter > 'a' && this.currentCharacter < 'f')
-                || (this.currentCharacter > 'A' && this.currentCharacter < 'F')) {
+        if ((this.currentCharacter >= '0' && this.currentCharacter <= '9')
+                || (this.currentCharacter >= 'a' && this.currentCharacter <= 'f')
+                || (this.currentCharacter >= 'A' && this.currentCharacter <= 'F')) {
             this.nextState = 11;
         }
         updateLexeme();
@@ -310,9 +299,9 @@ class LexicalAnalyzer {
     private void state_11() {
         checkReturn();
 
-        if ((this.currentCharacter > '0' && this.currentCharacter < '9')
-                || (this.currentCharacter > 'a' && this.currentCharacter < 'f')
-                || (this.currentCharacter > 'A' && this.currentCharacter < 'F')) {
+        if ((this.currentCharacter >= '0' && this.currentCharacter <= '9')
+                || (this.currentCharacter >= 'a' && this.currentCharacter <= 'f')
+                || (this.currentCharacter >= 'A' && this.currentCharacter <= 'F')) {
             this.type = Symbol.TYPE_BYTE;
             this.nextState = this.finalState;
         }

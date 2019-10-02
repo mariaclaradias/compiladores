@@ -45,6 +45,7 @@ public class SyntaxAnalyzer {
         tokenMatch(SymbolTable.END);
     }
 
+
     private void instruction() {
         // TYPE id 
         if (lexicalAnalyzer.getToken() == SymbolTable.INTEGER || lexicalAnalyzer.getToken() == SymbolTable.BOOLEAN
@@ -69,6 +70,7 @@ public class SyntaxAnalyzer {
                 tokenMatch(SymbolTable.ID);
 
                 if (lexicalAnalyzer.getToken() == SymbolTable.EQUAL) {
+                    tokenMatch(SymbolTable.EQUAL);
                     if (lexicalAnalyzer.getToken() == SymbolTable.ADD) {
                         tokenMatch(SymbolTable.ADD);
                     } else if (lexicalAnalyzer.getToken() == SymbolTable.SUB) {
@@ -95,7 +97,7 @@ public class SyntaxAnalyzer {
 
         // id = [(+|-)] VALUE;
         } else if (lexicalAnalyzer.getToken() == SymbolTable.ID) {
-            tokenMatch(SymbolTable.EQUAL);
+             tokenMatch(SymbolTable.EQUAL);
             if (lexicalAnalyzer.getToken() == SymbolTable.ADD) {
                 tokenMatch(SymbolTable.ADD);
             } else if (lexicalAnalyzer.getToken() == SymbolTable.SUB) {
@@ -128,10 +130,7 @@ public class SyntaxAnalyzer {
             tokenMatch(SymbolTable.SEMICOLON);
         } else if (lexicalAnalyzer.getToken() == SymbolTable.SEMICOLON) {
             tokenMatch(SymbolTable.SEMICOLON);
-        } else {
-            ErrorHandler.print(ErrorHandler.INVALID_TOKEN, this.lexicalAnalyzer.getCurrentLine(),
-                    this.lexicalAnalyzer.getLexeme());
-        }
+        } 
     }
 
     private void loop() {
