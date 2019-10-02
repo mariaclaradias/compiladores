@@ -130,7 +130,9 @@ public class SyntaxAnalyzer {
             tokenMatch(SymbolTable.SEMICOLON);
         } else if (lexicalAnalyzer.getToken() == SymbolTable.SEMICOLON) {
             tokenMatch(SymbolTable.SEMICOLON);
-        } 
+        } else if (lexicalAnalyzer.getToken() == SymbolTable.END) {
+            ErrorHandler.print(ErrorHandler.NO_COMMAND,  this.lexicalAnalyzer.getCurrentLine(),  "");
+        }
     }
 
     private void loop() {
