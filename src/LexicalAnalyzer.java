@@ -60,9 +60,11 @@ class LexicalAnalyzer {
         if (this.ALLOWED_CHARACTERS.contains(this.currentCharacter)
                 || Character.isLetterOrDigit(this.currentCharacter)) {
             return;     
-        }else {
+        }else if((int) this.currentCharacter == 65535){
+            this.endOfFile = true;
+        } else {
             ErrorHandler.print(ErrorHandler.INVALID_CHARACTER, this.currentLine, this.lexeme);
-        }  
+        }
     }
 
     private void checkLexeme() {
@@ -74,24 +76,26 @@ class LexicalAnalyzer {
                 } else {
                     this.symbol = table.insertID(this.lexeme, this.type);
                 }
-            }
-            if (this.lexeme.equals("false") || this.lexeme.equals("true")){
+            } else if (this.lexeme.equals("false") || this.lexeme.equals("true")){
                 this.type = Symbol.TYPE_BOOLEAN;
                 this.symbol = table.insertValue(this.lexeme, this.type);
+            } else {
+                this.symbol = this.table.searchLexeme(lexeme);
             }
-            this.symbol = this.table.searchLexeme(lexeme);
-        
             //System.exit(0);
         }
     }
 
     private void checkReturn() {
-
         try {
             if (this.shouldReturnCharacter) {
                 this.shouldReturnCharacter = false;
             } else {
                 this.currentCharacter = (char) reader.read();
+                // if((int)this.currentCharacter == 65535){
+                //     this.endOfFile = true;
+                //     this.nextState = this.finalState;
+                // }
             }
         } catch (Exception e) {
             ErrorHandler.print(ErrorHandler.READING_ERROR, this.currentLine, this.lexeme);
