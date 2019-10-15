@@ -69,11 +69,10 @@ class LexicalAnalyzer {
         if (this.ALLOWED_CHARACTERS.contains(this.currentCharacter)
                 || Character.isLetterOrDigit(this.currentCharacter)) {
             return;
-        } else if ((int) this.currentCharacter == 65535) {
-            this.endOfFile = true;
+        } else if ((int) this.currentCharacter == 65535) {            
             this.nextState = this.finalState;
         } else {
-            ErrorHandler.print(ErrorHandler.INVALID_CHARACTER, this.currentLine, this.lexeme);
+            ErrorHandler.print(ErrorHandler.INVALID_CHARACTER, this.currentLine, ""+this.currentCharacter);
         }
     }
 
@@ -93,6 +92,8 @@ class LexicalAnalyzer {
                 this.symbol = this.table.searchLexeme(lexeme);
             }
             // System.exit(0);
+        } else {
+            this.symbol = new Symbol(SymbolTable.EOF, "EOF");
         }
     }
 
@@ -104,7 +105,7 @@ class LexicalAnalyzer {
                 this.currentCharacter = (char) reader.read();
             }
         } catch (Exception e) {
-            ErrorHandler.print(ErrorHandler.READING_ERROR, this.currentLine, this.lexeme);
+            ErrorHandler.print(ErrorHandler.INVALID_CHARACTER, this.currentLine, this.lexeme);
         }
         checkError();
     }
@@ -153,6 +154,9 @@ class LexicalAnalyzer {
 
         this.nextState = 0;
         checkLexeme();
+        if ((int)this.currentCharacter == 65535){
+            this.endOfFile = true;
+        }
     }
 
     private void state_00() {
@@ -177,8 +181,9 @@ class LexicalAnalyzer {
         } else if (this.currentCharacter == '_') {
             this.nextState = 13;
         } else if (this.IGNORED_CHARACTERS.contains(this.currentCharacter)) {
-            if (this.currentCharacter == '\n')
+            if (this.currentCharacter == '\r') {
                 this.currentLine++;
+            }
             this.nextState = 0;
         } else {
             this.nextState = this.finalState;
@@ -246,6 +251,9 @@ class LexicalAnalyzer {
             this.nextState = 6;
         } else if (this.endOfFile == true) {
             ErrorHandler.print(ErrorHandler.END_OF_FILE, this.getCurrentLine(), this.lexeme);
+        } else if (this.currentCharacter == '\n'){
+            this.currentLine++;
+            this.nextState = 5;
         } else {
             this.nextState = 5;
         }
@@ -259,6 +267,9 @@ class LexicalAnalyzer {
             this.nextState = 6;
         } else if (this.currentCharacter == '/') {
             this.nextState = 0;
+        } else if (this.currentCharacter == '\n'){
+            this.currentLine++;
+            this.nextState = 5;
         } else {
             this.nextState = 5;
         }
@@ -297,6 +308,7 @@ class LexicalAnalyzer {
         checkReturn();
 
         if (this.currentCharacter == '=') {
+            updateLexeme();
             this.nextState = this.finalState;
         } else {
             this.shouldReturnCharacter = true;
@@ -332,7 +344,7 @@ class LexicalAnalyzer {
         if (this.currentCharacter == '=') {
             this.nextState = this.finalState;
         } else {
-            ErrorHandler.print(ErrorHandler.INVALID_TOKEN, this.currentLine, this.lexeme);
+            ErrorHandler.print(ErrorHandler.INVALID_CHARACTER, this.currentLine, this.lexeme);
         }
     }
 
@@ -344,7 +356,7 @@ class LexicalAnalyzer {
         } else if (this.currentCharacter == '_') {
             this.nextState = 13;
         } else {
-            ErrorHandler.print(ErrorHandler.INVALID_TOKEN, this.currentLine, this.lexeme);
+            ErrorHandler.print(ErrorHandler.INVALID_CHARACTER, this.currentLine, this.lexeme);
         }
     }
 

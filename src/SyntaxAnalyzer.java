@@ -22,9 +22,9 @@ public class SyntaxAnalyzer {
             lexicalAnalyzer.AFD();
         } else {
             if (lexicalAnalyzer.isEndOfFile()) {
-                // ErrorHandler.
+                ErrorHandler.print(ErrorHandler.END_OF_FILE, lexicalAnalyzer.getCurrentLine(), "");
             } else {
-                // token n esperado
+                ErrorHandler.print(ErrorHandler.INVALID_LEXEME, lexicalAnalyzer.getCurrentLine(), lexicalAnalyzer.getLexeme());
             }
         }
     }
@@ -108,6 +108,9 @@ public class SyntaxAnalyzer {
             tokenMatch(SymbolTable.VALUE);
             tokenMatch(SymbolTable.SEMICOLON);
         }
+        else {
+            ErrorHandler.print(ErrorHandler.INVALID_LEXEME, lexicalAnalyzer.getCurrentLine(), lexicalAnalyzer.getLexeme());
+        }
     }
 
     private void command() {
@@ -132,8 +135,8 @@ public class SyntaxAnalyzer {
             tokenMatch(SymbolTable.SEMICOLON);
         } else if (lexicalAnalyzer.getToken() == SymbolTable.SEMICOLON) {
             tokenMatch(SymbolTable.SEMICOLON);
-        } else if (lexicalAnalyzer.getToken() == SymbolTable.END) {
-            ErrorHandler.print(ErrorHandler.NO_COMMAND, this.lexicalAnalyzer.getCurrentLine(), "");
+        } else {
+            ErrorHandler.print(ErrorHandler.INVALID_LEXEME, this.lexicalAnalyzer.getCurrentLine(), "");
         }
     }
 
@@ -144,6 +147,8 @@ public class SyntaxAnalyzer {
             expression();
             tokenMatch(SymbolTable.CLOSE_PAR);
             loopCommands();
+        } else {
+            ErrorHandler.print(ErrorHandler.INVALID_LEXEME, lexicalAnalyzer.getCurrentLine(), lexicalAnalyzer.getLexeme());
         }
     }
 
@@ -162,6 +167,8 @@ public class SyntaxAnalyzer {
                 || lexicalAnalyzer.getToken() == SymbolTable.READLN || lexicalAnalyzer.getToken() == SymbolTable.WRITE
                 || lexicalAnalyzer.getToken() == SymbolTable.WRITELN || lexicalAnalyzer.getToken() == SymbolTable.ID) {
             command();
+        } else {
+            ErrorHandler.print(ErrorHandler.INVALID_LEXEME, lexicalAnalyzer.getCurrentLine(), lexicalAnalyzer.getLexeme());
         }
     }
 
@@ -177,6 +184,8 @@ public class SyntaxAnalyzer {
                 tokenMatch(SymbolTable.ELSE);
                 loopCommands();
             }
+        } else {
+            ErrorHandler.print(ErrorHandler.INVALID_LEXEME, lexicalAnalyzer.getCurrentLine(), lexicalAnalyzer.getLexeme());
         }
     }
 
@@ -187,6 +196,8 @@ public class SyntaxAnalyzer {
             tokenMatch(SymbolTable.ID);
             tokenMatch(SymbolTable.CLOSE_PAR);
             tokenMatch(SymbolTable.SEMICOLON);
+        } else {
+            ErrorHandler.print(ErrorHandler.INVALID_LEXEME, lexicalAnalyzer.getCurrentLine(), lexicalAnalyzer.getLexeme());
         }
     }
 
@@ -212,6 +223,8 @@ public class SyntaxAnalyzer {
             }
             tokenMatch(SymbolTable.CLOSE_PAR);
             tokenMatch(SymbolTable.SEMICOLON);
+        } else {
+            ErrorHandler.print(ErrorHandler.INVALID_LEXEME, lexicalAnalyzer.getCurrentLine(), lexicalAnalyzer.getLexeme());
         }
     }
 
@@ -229,6 +242,8 @@ public class SyntaxAnalyzer {
                 tokenMatch(lexicalAnalyzer.getToken());
                 expressionPrecedence_3();
             }
+        } else {
+            ErrorHandler.print(ErrorHandler.INVALID_LEXEME, lexicalAnalyzer.getCurrentLine(), lexicalAnalyzer.getLexeme());
         }
 
     }
@@ -246,6 +261,8 @@ public class SyntaxAnalyzer {
                 tokenMatch(lexicalAnalyzer.getToken());
                 expressionPrecedence_2();
             }
+        } else {
+            ErrorHandler.print(ErrorHandler.INVALID_LEXEME, lexicalAnalyzer.getCurrentLine(), lexicalAnalyzer.getLexeme());
         }
     }
 
@@ -258,6 +275,8 @@ public class SyntaxAnalyzer {
                 tokenMatch(lexicalAnalyzer.getToken());
                 expressionPrecedence_1();
             }
+        } else {
+            ErrorHandler.print(ErrorHandler.INVALID_LEXEME, lexicalAnalyzer.getCurrentLine(), lexicalAnalyzer.getLexeme());
         }
     }
 
@@ -273,6 +292,8 @@ public class SyntaxAnalyzer {
             tokenMatch(SymbolTable.VALUE);
         } else if (lexicalAnalyzer.getToken() == SymbolTable.ID) {
             tokenMatch(SymbolTable.ID);
+        } else {
+            ErrorHandler.print(ErrorHandler.INVALID_LEXEME, lexicalAnalyzer.getCurrentLine(), lexicalAnalyzer.getLexeme());
         }
     }
 
@@ -285,6 +306,8 @@ public class SyntaxAnalyzer {
             tokenMatch(SymbolTable.BYTE);
         } else if (lexicalAnalyzer.getToken() == SymbolTable.STRING) {
             tokenMatch(SymbolTable.STRING);
+        } else {
+            ErrorHandler.print(ErrorHandler.INVALID_LEXEME, lexicalAnalyzer.getCurrentLine(), lexicalAnalyzer.getLexeme());
         }
     }
 
