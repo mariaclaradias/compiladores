@@ -12,14 +12,17 @@ public class Symbol {
 
     private byte token;
     private byte type;
+    private byte class;
     private int address;
     private String lexeme;
 
-    public static final byte NO_TYPE = 0;
-    public static final byte TYPE_INTEGER = 1;
-    public static final byte TYPE_BYTE = 2;
-    public static final byte TYPE_STRING = 3;
-    public static final byte TYPE_BOOLEAN = 4;
+    public static final byte CLASS_CONST = 0;
+    public static final byte CLASS_VAR = 1;
+
+    public static final byte TYPE_INTEGER = 0;
+    public static final byte TYPE_BYTE = 1;
+    public static final byte TYPE_STRING = 2;
+    public static final byte TYPE_BOOLEAN = 3;
 
     public Symbol() {
 
@@ -66,5 +69,13 @@ public class Symbol {
 
     public String getLexeme() {
         return lexeme;
+    }
+
+    public void setClass(byte class) {
+        this.class = class;
+    }
+
+    public byte getClass() {
+        return class;
     }
 }
