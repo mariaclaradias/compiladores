@@ -1,7 +1,6 @@
 /* Exemplo de Programa na linguagem L */
 
 integer n=-1;
-string nome;
 boolean naoTerminou;
 const MAXITER=10;
 
@@ -15,5 +14,5 @@ main
     writeln('Ola'' ',nome);
     n=n+1;
     naoTerminou=n<MAXITER;
-  
+  end
 end

@@ -133,7 +133,7 @@ public class SymbolTable {
      */
     public void showSymbolsTable() {
         for (String key : hashTable.keySet()) {
-            System.out.println(hashTable.get(key).getToken() + " " + hashTable.get(key).getLexeme());
+            System.out.println(hashTable.get(key).getToken() + " " + hashTable.get(key).getLexeme() + " type: " + hashTable.get(key).getType());
         }
     }
 }

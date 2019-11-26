@@ -12,7 +12,7 @@ public class Symbol {
 
     private byte token;
     private byte type;
-    private byte class;
+    private byte classType;
     private int address;
     private String lexeme;
 
@@ -32,11 +32,13 @@ public class Symbol {
         this.token = token;
         this.lexeme = lexeme;
         this.type = type;
+        this.classType = -1;
     }
 
     public Symbol(byte token, String lexeme) {
         this.token = token;
         this.lexeme = lexeme;
+        this.classType = -1;
     }
 
     public void setType(byte type) {
@@ -71,11 +73,11 @@ public class Symbol {
         return lexeme;
     }
 
-    public void setClass(byte class) {
-        this.class = class;
+    public void setClassType(byte classType) {
+        this.classType = classType;
     }
 
-    public byte getClass() {
-        return class;
+    public byte getClassType() {
+        return this.classType;
     }
 }

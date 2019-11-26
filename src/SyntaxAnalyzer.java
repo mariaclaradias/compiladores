@@ -24,8 +24,8 @@ public class SyntaxAnalyzer {
 
     private void tokenMatch(byte expectedToken) {
         if (lexicalAnalyzer.getToken() == expectedToken) {
-            lexicalAnalyzer.AFD();
             this.symbol = lexicalAnalyzer.getSymbol();
+            lexicalAnalyzer.AFD();
         } else {
             if (lexicalAnalyzer.isEndOfFile()) {
                 ErrorHandler.print(ErrorHandler.END_OF_FILE, lexicalAnalyzer.getCurrentLine(), "");
@@ -64,8 +64,11 @@ public class SyntaxAnalyzer {
             tokenMatch(SymbolTable.ID);
             id = this.symbol;
             // Regra 25
-            if (this.symbol.getClass() != null) {
-                ErrorHandler.print(ErrorHandler.DECLARED_ID, this.lexicalAnalyzer.getCurrentLine(), this.lexicalAnalyzer.getLexeme());
+            if (this.symbol.getClassType() != -1) {
+                ErrorHandler.print(ErrorHandler.DECLARED_ID, this.lexicalAnalyzer.getCurrentLine(), this.symbol.getLexeme());
+            } else {
+                this.symbol.setClassType(Symbol.CLASS_CONST);
+                this.symbol.setType(currentType);
             }
 
             // TYPE id = [(+|-)] VALUE
@@ -83,33 +86,34 @@ public class SyntaxAnalyzer {
                     // Regra 11
                     this.flagNegative = true;
                 }
+                
                 tokenMatch(SymbolTable.VALUE);
-
                 // Regra 27
                 if (this.flagNegative == true) {
                     if (this.symbol.getType() != Symbol.TYPE_INTEGER &&
-                        this.symbol.getType() != Symbol.TYPE_BYTE) {
-                            ErrorHandler.print(ErrorHandler.INVALID_TYPE, this.lexicalAnalyzer.getCurrentLine(), this.lexicalAnalyzer.getLexeme());
-                        }
+                    this.symbol.getType() != Symbol.TYPE_BYTE) {
+                        ErrorHandler.print(ErrorHandler.INVALID_TYPE, this.lexicalAnalyzer.getCurrentLine(), this.symbol.getLexeme());
+                    }
                     this.symbol.setType(Symbol.TYPE_INTEGER);
                 }
                 if (this.flagPositive == true) {
                     if (this.symbol.getType() != Symbol.TYPE_INTEGER &&
-                        this.symbol.getType() != Symbol.TYPE_BYTE) {
-                            ErrorHandler.print(ErrorHandler.INVALID_TYPE, this.lexicalAnalyzer.getCurrentLine(), this.lexicalAnalyzer.getLexeme());
-                        }
+                    this.symbol.getType() != Symbol.TYPE_BYTE) {
+                        ErrorHandler.print(ErrorHandler.INVALID_TYPE, this.lexicalAnalyzer.getCurrentLine(), this.symbol.getLexeme());
+                    }
                 }
-
+                
                 // Regra 28
                 if (this.symbol.getType() != Symbol.TYPE_INTEGER &&
-                        this.symbol.getType() != Symbol.TYPE_BYTE &&
-                        this.symbol.getType() != Symbol.TYPE_STRING &&
-                        this.symbol.getType() != Symbol.TYPE_BOOLEAN) {
-                            ErrorHandler.print(ErrorHandler.INVALID_TYPE, this.lexicalAnalyzer.getCurrentLine(), this.lexicalAnalyzer.getLexeme());
- 
+                this.symbol.getType() != Symbol.TYPE_BYTE &&
+                this.symbol.getType() != Symbol.TYPE_STRING &&
+                this.symbol.getType() != Symbol.TYPE_BOOLEAN) {
+                    ErrorHandler.print(ErrorHandler.INVALID_TYPE, this.lexicalAnalyzer.getCurrentLine(), this.symbol.getLexeme());
+                }
+                
                 // Regra 29
                 if (id.getType() != this.symbol.getType()) {
-                    ErrorHandler.print(ErrorHandler.INVALID_TYPE, this.lexicalAnalyzer.getCurrentLine(), this.lexicalAnalyzer.getLexeme());
+                    ErrorHandler.print(ErrorHandler.INVALID_TYPE, this.lexicalAnalyzer.getCurrentLine(), this.symbol.getLexeme());
                 }            
             }
 
@@ -118,14 +122,15 @@ public class SyntaxAnalyzer {
                 tokenMatch(SymbolTable.COMMA);
                 tokenMatch(SymbolTable.ID);
                 id = this.symbol;
-
+                
                 // Regra 25
-                if (this.symbol.getClass() != null) {
-                    ErrorHandler.print(ErrorHandler.DECLARED_ID, this.lexicalAnalyzer.getCurrentLine(), this.lexicalAnalyzer.getLexeme());
+                if (this.symbol.getClassType() != -1) {
+                    ErrorHandler.print(ErrorHandler.DECLARED_ID, this.lexicalAnalyzer.getCurrentLine(), this.symbol.getLexeme());
                 }
-
+                
                 // Regra 30
                 id.setType(currentType);
+                
 
                 if (lexicalAnalyzer.getToken() == SymbolTable.EQUAL) {
                     tokenMatch(SymbolTable.EQUAL);
@@ -145,28 +150,29 @@ public class SyntaxAnalyzer {
                     // Regra 27
                     if (this.flagNegative == true) {
                         if (this.symbol.getType() != Symbol.TYPE_INTEGER &&
-                            this.symbol.getType() != Symbol.TYPE_BYTE) {
-                                ErrorHandler.print(ErrorHandler.INVALID_TYPE, this.lexicalAnalyzer.getCurrentLine(), this.lexicalAnalyzer.getLexeme());
-                            }
+                        this.symbol.getType() != Symbol.TYPE_BYTE) {
+                            ErrorHandler.print(ErrorHandler.INVALID_TYPE, this.lexicalAnalyzer.getCurrentLine(), this.symbol.getLexeme());
+                        }
                         this.symbol.setType(Symbol.TYPE_INTEGER);
                     }
                     if (this.flagPositive == true) {
                         if (this.symbol.getType() != Symbol.TYPE_INTEGER &&
-                            this.symbol.getType() != Symbol.TYPE_BYTE) {
-                                ErrorHandler.print(ErrorHandler.INVALID_TYPE, this.lexicalAnalyzer.getCurrentLine(), this.lexicalAnalyzer.getLexeme());
-                            }
+                        this.symbol.getType() != Symbol.TYPE_BYTE) {
+                            ErrorHandler.print(ErrorHandler.INVALID_TYPE, this.lexicalAnalyzer.getCurrentLine(), this.symbol.getLexeme());
+                        }
                     }
-
+                    
                     // Regra 28
                     if (this.symbol.getType() != Symbol.TYPE_INTEGER &&
-                            this.symbol.getType() != Symbol.TYPE_BYTE &&
-                            this.symbol.getType() != Symbol.TYPE_STRING &&
-                            this.symbol.getType() != Symbol.TYPE_BOOLEAN) {
-                                ErrorHandler.print(ErrorHandler.INVALID_TYPE, this.lexicalAnalyzer.getCurrentLine(), this.lexicalAnalyzer.getLexeme());
-    
+                    this.symbol.getType() != Symbol.TYPE_BYTE &&
+                    this.symbol.getType() != Symbol.TYPE_STRING &&
+                    this.symbol.getType() != Symbol.TYPE_BOOLEAN) {
+                        ErrorHandler.print(ErrorHandler.INVALID_TYPE, this.lexicalAnalyzer.getCurrentLine(), this.symbol.getLexeme());
+                    }
+                    
                     // Regra 29
                     if (id.getType() != this.symbol.getType()) {
-                        ErrorHandler.print(ErrorHandler.INVALID_TYPE, this.lexicalAnalyzer.getCurrentLine(), this.lexicalAnalyzer.getLexeme());
+                        ErrorHandler.print(ErrorHandler.INVALID_TYPE, this.lexicalAnalyzer.getCurrentLine(), this.symbol.getLexeme());
                     }     
                 }
             }
@@ -176,11 +182,11 @@ public class SyntaxAnalyzer {
         } else if (lexicalAnalyzer.getToken() == SymbolTable.CONST) {
             tokenMatch(SymbolTable.CONST);
             tokenMatch(SymbolTable.ID);            
-            // Regra 25
-            if (this.symbol.getClass() != null) {
-                ErrorHandler.print(ErrorHandler.DECLARED_ID, this.lexicalAnalyzer.getCurrentLine(), this.lexicalAnalyzer.getLexeme());
-            }
             id = this.symbol;
+            // Regra 25
+            if (this.symbol.getClassType() != -1) {
+                ErrorHandler.print(ErrorHandler.DECLARED_ID, this.lexicalAnalyzer.getCurrentLine(), this.symbol.getLexeme());
+            }
             tokenMatch(SymbolTable.EQUAL);
             // Regra 9
             this.flagPositive = false;
@@ -199,38 +205,39 @@ public class SyntaxAnalyzer {
             // Regra 27
             if (this.flagNegative == true) {
                 if (this.symbol.getType() != Symbol.TYPE_INTEGER &&
-                    this.symbol.getType() != Symbol.TYPE_BYTE) {
-                        ErrorHandler.print(ErrorHandler.INVALID_TYPE, this.lexicalAnalyzer.getCurrentLine(), this.lexicalAnalyzer.getLexeme());
-                    }
+                this.symbol.getType() != Symbol.TYPE_BYTE) {
+                    ErrorHandler.print(ErrorHandler.INVALID_TYPE, this.lexicalAnalyzer.getCurrentLine(), this.symbol.getLexeme());
+                }
                 this.symbol.setType(Symbol.TYPE_INTEGER);
             }
             if (this.flagPositive == true) {
                 if (this.symbol.getType() != Symbol.TYPE_INTEGER &&
-                    this.symbol.getType() != Symbol.TYPE_BYTE) {
-                        ErrorHandler.print(ErrorHandler.INVALID_TYPE, this.lexicalAnalyzer.getCurrentLine(), this.lexicalAnalyzer.getLexeme());
-                    }
+                this.symbol.getType() != Symbol.TYPE_BYTE) {
+                    ErrorHandler.print(ErrorHandler.INVALID_TYPE, this.lexicalAnalyzer.getCurrentLine(), this.symbol.getLexeme());
+                }
             }
-
+            
             // Regra 26
             id.setType(this.symbol.getType());
-
+            
             // Regra 28
             if (this.symbol.getType() != Symbol.TYPE_INTEGER &&
             this.symbol.getType() != Symbol.TYPE_BYTE &&
             this.symbol.getType() != Symbol.TYPE_STRING &&
             this.symbol.getType() != Symbol.TYPE_BOOLEAN) {
-                ErrorHandler.print(ErrorHandler.INVALID_TYPE, this.lexicalAnalyzer.getCurrentLine(), this.lexicalAnalyzer.getLexeme());
-
+                ErrorHandler.print(ErrorHandler.INVALID_TYPE, this.lexicalAnalyzer.getCurrentLine(), this.symbol.getLexeme());
+            }
             tokenMatch(SymbolTable.SEMICOLON);
-
+            
+        
             // id = [(+|-)] VALUE;
         } else if (lexicalAnalyzer.getToken() == SymbolTable.ID) {
             tokenMatch(SymbolTable.ID);
-            // Regra 21
-            if (this.symbol.getClass() == null) {
-                ErrorHandler.print(ErrorHandler.ID_NOT_DECLARED, this.lexicalAnalyzer.getCurrentLine(), this.lexicalAnalyzer.getLexeme());
-            }
             id = this.symbol;
+            // Regra 21
+            if (this.symbol.getClassType() == -1) {
+                ErrorHandler.print(ErrorHandler.ID_NOT_DECLARED, this.lexicalAnalyzer.getCurrentLine(), this.symbol.getLexeme());
+            }
             tokenMatch(SymbolTable.EQUAL);
             // Regra 9
             this.flagPositive = false;
@@ -245,33 +252,34 @@ public class SyntaxAnalyzer {
                 // Regra 11
                 this.flagNegative = true;
             }
-            tokenMatch(SymbolTable.VALUE);
             
+            tokenMatch(SymbolTable.VALUE);
             // Regra 27
             if (this.flagNegative == true) {
                 if (this.symbol.getType() != Symbol.TYPE_INTEGER &&
-                    this.symbol.getType() != Symbol.TYPE_BYTE) {
-                        ErrorHandler.print(ErrorHandler.INVALID_TYPE, this.lexicalAnalyzer.getCurrentLine(), this.lexicalAnalyzer.getLexeme());
-                    }
+                this.symbol.getType() != Symbol.TYPE_BYTE) {
+                    ErrorHandler.print(ErrorHandler.INVALID_TYPE, this.lexicalAnalyzer.getCurrentLine(), this.symbol.getLexeme());
+                }
                 this.symbol.setType(Symbol.TYPE_INTEGER);
             }
             if (this.flagPositive == true) {
                 if (this.symbol.getType() != Symbol.TYPE_INTEGER &&
-                    this.symbol.getType() != Symbol.TYPE_BYTE) {
-                        ErrorHandler.print(ErrorHandler.INVALID_TYPE, this.lexicalAnalyzer.getCurrentLine(), this.lexicalAnalyzer.getLexeme());
-                    }
+                this.symbol.getType() != Symbol.TYPE_BYTE) {
+                    ErrorHandler.print(ErrorHandler.INVALID_TYPE, this.lexicalAnalyzer.getCurrentLine(), this.symbol.getLexeme());
+                }
             }
-
+            
             // Regra 28
             if (this.symbol.getType() != Symbol.TYPE_INTEGER &&
-                    this.symbol.getType() != Symbol.TYPE_BYTE &&
-                    this.symbol.getType() != Symbol.TYPE_STRING &&
-                    this.symbol.getType() != Symbol.TYPE_BOOLEAN) {
-                        ErrorHandler.print(ErrorHandler.INVALID_TYPE, this.lexicalAnalyzer.getCurrentLine(), this.lexicalAnalyzer.getLexeme());
-
+            this.symbol.getType() != Symbol.TYPE_BYTE &&
+            this.symbol.getType() != Symbol.TYPE_STRING &&
+            this.symbol.getType() != Symbol.TYPE_BOOLEAN) {
+                ErrorHandler.print(ErrorHandler.INVALID_TYPE, this.lexicalAnalyzer.getCurrentLine(), this.symbol.getLexeme());
+            }
+            
             // Regra 29
             if (id.getType() != this.symbol.getType()) {
-                ErrorHandler.print(ErrorHandler.INVALID_TYPE, this.lexicalAnalyzer.getCurrentLine(), this.lexicalAnalyzer.getLexeme());
+                ErrorHandler.print(ErrorHandler.INVALID_TYPE, this.lexicalAnalyzer.getCurrentLine(), this.symbol.getLexeme());
             }    
             tokenMatch(SymbolTable.SEMICOLON);
         }
@@ -314,7 +322,7 @@ public class SyntaxAnalyzer {
             byte currentType = expression();
             // Regra 23            
             if (currentType != Symbol.TYPE_BOOLEAN) {
-                ErrorHandler.print(ErrorHandler.INVALID_TYPE, this.lexicalAnalyzer.getCurrentLine(), this.lexicalAnalyzer.getLexeme());
+                ErrorHandler.print(ErrorHandler.INVALID_TYPE, this.lexicalAnalyzer.getCurrentLine(), this.symbol.getLexeme());
             }
             tokenMatch(SymbolTable.CLOSE_PAR);
             loopCommands();
@@ -350,7 +358,7 @@ public class SyntaxAnalyzer {
             byte currentType = expression();
             // Regra 23            
             if (currentType != Symbol.TYPE_BOOLEAN) {
-                ErrorHandler.print(ErrorHandler.INVALID_TYPE, this.lexicalAnalyzer.getCurrentLine(), this.lexicalAnalyzer.getLexeme());
+                ErrorHandler.print(ErrorHandler.INVALID_TYPE, this.lexicalAnalyzer.getCurrentLine(), this.symbol.getLexeme());
             }
             tokenMatch(SymbolTable.CLOSE_PAR);
             tokenMatch(SymbolTable.THEN);
@@ -370,14 +378,14 @@ public class SyntaxAnalyzer {
             tokenMatch(SymbolTable.OPEN_PAR);
             tokenMatch(SymbolTable.ID);
             // Regra 21
-            if (this.symbol.getClass() == null) {
-                ErrorHandler.print(ErrorHandler.ID_NOT_DECLARED, this.lexicalAnalyzer.getCurrentLine(), this.lexicalAnalyzer.getLexeme());
+            if (this.symbol.getClassType() == -1) {
+                ErrorHandler.print(ErrorHandler.ID_NOT_DECLARED, this.lexicalAnalyzer.getCurrentLine(), this.symbol.getLexeme());
             }
             // Regra 22
             if (this.symbol.getType() != Symbol.TYPE_INTEGER &&
                 this.symbol.getType() != Symbol.TYPE_STRING &&
                 this.symbol.getType() != Symbol.TYPE_BYTE) {
-                    ErrorHandler.print(ErrorHandler.INVALID_TYPE, this.lexicalAnalyzer.getCurrentLine(), this.lexicalAnalyzer.getLexeme());
+                    ErrorHandler.print(ErrorHandler.INVALID_TYPE, this.lexicalAnalyzer.getCurrentLine(), this.symbol.getLexeme());
                 }
             tokenMatch(SymbolTable.CLOSE_PAR);
             tokenMatch(SymbolTable.SEMICOLON);
@@ -395,7 +403,7 @@ public class SyntaxAnalyzer {
             if (currentType != Symbol.TYPE_INTEGER &&
                 currentType != Symbol.TYPE_STRING &&
                 currentType != Symbol.TYPE_BYTE) {
-                    ErrorHandler.print(ErrorHandler.INVALID_TYPE, this.lexicalAnalyzer.getCurrentLine(), this.lexicalAnalyzer.getLexeme());
+                    ErrorHandler.print(ErrorHandler.INVALID_TYPE, this.lexicalAnalyzer.getCurrentLine(), this.symbol.getLexeme());
                 }
             while (lexicalAnalyzer.getToken() == SymbolTable.COMMA) {
                 tokenMatch(SymbolTable.COMMA);
@@ -404,7 +412,7 @@ public class SyntaxAnalyzer {
                 if (currentType != Symbol.TYPE_INTEGER &&
                     currentType != Symbol.TYPE_STRING &&
                     currentType != Symbol.TYPE_BYTE) {
-                        ErrorHandler.print(ErrorHandler.INVALID_TYPE, this.lexicalAnalyzer.getCurrentLine(), this.lexicalAnalyzer.getLexeme());
+                        ErrorHandler.print(ErrorHandler.INVALID_TYPE, this.lexicalAnalyzer.getCurrentLine(), this.symbol.getLexeme());
                     }
             }
             tokenMatch(SymbolTable.CLOSE_PAR);
@@ -418,7 +426,7 @@ public class SyntaxAnalyzer {
             if (currentType != Symbol.TYPE_INTEGER &&
                 currentType != Symbol.TYPE_STRING &&
                 currentType != Symbol.TYPE_BYTE) {
-                    ErrorHandler.print(ErrorHandler.INVALID_TYPE, this.lexicalAnalyzer.getCurrentLine(), this.lexicalAnalyzer.getLexeme());
+                    ErrorHandler.print(ErrorHandler.INVALID_TYPE, this.lexicalAnalyzer.getCurrentLine(), this.symbol.getLexeme());
                 }
             while (lexicalAnalyzer.getToken() == SymbolTable.COMMA) {
                 tokenMatch(SymbolTable.COMMA);
@@ -427,7 +435,7 @@ public class SyntaxAnalyzer {
                 if (currentType != Symbol.TYPE_INTEGER &&
                     currentType != Symbol.TYPE_STRING &&
                     currentType != Symbol.TYPE_BYTE) {
-                        ErrorHandler.print(ErrorHandler.INVALID_TYPE, this.lexicalAnalyzer.getCurrentLine(), this.lexicalAnalyzer.getLexeme());
+                        ErrorHandler.print(ErrorHandler.INVALID_TYPE, this.lexicalAnalyzer.getCurrentLine(), this.symbol.getLexeme());
                     }
             }
             tokenMatch(SymbolTable.CLOSE_PAR);
@@ -438,7 +446,7 @@ public class SyntaxAnalyzer {
     }
 
     private byte expression() {
-        byte currentType;
+        byte currentType = -1;
         if (lexicalAnalyzer.getToken() == SymbolTable.ADD || lexicalAnalyzer.getToken() == SymbolTable.SUB
                 || lexicalAnalyzer.getToken() == SymbolTable.NOT || lexicalAnalyzer.getToken() == SymbolTable.OPEN_PAR
                 || lexicalAnalyzer.getToken() == SymbolTable.VALUE || lexicalAnalyzer.getToken() == SymbolTable.ID) {
@@ -463,23 +471,23 @@ public class SyntaxAnalyzer {
                 if ((currentType != Symbol.TYPE_INTEGER && currentType != Symbol.TYPE_BYTE) ||
                     (exp2Type != Symbol.TYPE_INTEGER && exp2Type != Symbol.TYPE_BYTE)) {
                     if (currentType != exp2Type) {
-                        ErrorHandler.print(ErrorHandler.INVALID_TYPE, this.lexicalAnalyzer.getCurrentLine(), this.lexicalAnalyzer.getLexeme());
+                        ErrorHandler.print(ErrorHandler.INVALID_TYPE, this.lexicalAnalyzer.getCurrentLine(), this.symbol.getLexeme());
                     }
                     if (this.flagEquals == false && currentType != Symbol.TYPE_STRING) {
-                        ErrorHandler.print(ErrorHandler.INVALID_TYPE, this.lexicalAnalyzer.getCurrentLine(), this.lexicalAnalyzer.getLexeme());
+                        ErrorHandler.print(ErrorHandler.INVALID_TYPE, this.lexicalAnalyzer.getCurrentLine(), this.symbol.getLexeme());
                     }
                 }
-                return currentType;
 
             }
         } else {
             ErrorHandler.print(ErrorHandler.INVALID_LEXEME, lexicalAnalyzer.getCurrentLine(), lexicalAnalyzer.getLexeme());
         }
+        return currentType;
 
     }
 
     private byte expressionPrecedence_3() {
-        byte currentType;
+        byte currentType = -1;
         if (lexicalAnalyzer.getToken() == SymbolTable.ADD || lexicalAnalyzer.getToken() == SymbolTable.SUB
             || lexicalAnalyzer.getToken() == SymbolTable.NOT || lexicalAnalyzer.getToken() == SymbolTable.OPEN_PAR
             || lexicalAnalyzer.getToken() == SymbolTable.VALUE || lexicalAnalyzer.getToken() == SymbolTable.ID) {
@@ -498,8 +506,8 @@ public class SyntaxAnalyzer {
             byte ex1Type = expressionPrecedence_2();
             // Regra 12
             if (this.flagPositive == true || this.flagNegative == true) {
-                if (ex1Type != Symbol.TYPE_INTEGER && ex1type != Symbol.TYPE_BYTE) {
-                    ErrorHandler.print(ErrorHandler.INVALID_TYPE, this.lexicalAnalyzer.getCurrentLine(), this.lexicalAnalyzer.getLexeme());
+                if (ex1Type != Symbol.TYPE_INTEGER && ex1Type != Symbol.TYPE_BYTE) {
+                    ErrorHandler.print(ErrorHandler.INVALID_TYPE, this.lexicalAnalyzer.getCurrentLine(), this.symbol.getLexeme());
                 } else {
                     currentType = Symbol.TYPE_INTEGER;
                 }
@@ -529,29 +537,29 @@ public class SyntaxAnalyzer {
                 byte ex2Type = expressionPrecedence_2();
                 // Regra 15
                 if (currentType == Symbol.TYPE_INTEGER && (ex2Type != Symbol.TYPE_BYTE && ex2Type != Symbol.TYPE_INTEGER)) {
-                    ErrorHandler.print(ErrorHandler.INVALID_TYPE, this.lexicalAnalyzer.getCurrentLine(), this.lexicalAnalyzer.getLexeme());              
+                    ErrorHandler.print(ErrorHandler.INVALID_TYPE, this.lexicalAnalyzer.getCurrentLine(), this.symbol.getLexeme());              
                 }
                 if (this.flagPositive != true && this.flagNegative != true) {
-                    ErrorHandler.print(ErrorHandler.INVALID_TYPE, this.lexicalAnalyzer.getCurrentLine(), this.lexicalAnalyzer.getLexeme());              
+                    ErrorHandler.print(ErrorHandler.INVALID_TYPE, this.lexicalAnalyzer.getCurrentLine(), this.symbol.getLexeme());              
                 } else if (ex1Type != ex2Type) {
-                    ErrorHandler.print(ErrorHandler.INVALID_TYPE, this.lexicalAnalyzer.getCurrentLine(), this.lexicalAnalyzer.getLexeme());              
+                    ErrorHandler.print(ErrorHandler.INVALID_TYPE, this.lexicalAnalyzer.getCurrentLine(), this.symbol.getLexeme());              
                 }
                 if (ex2Type == Symbol.TYPE_BOOLEAN) {
                     if (this.flagBoolean == false) {
-                        ErrorHandler.print(ErrorHandler.INVALID_TYPE, this.lexicalAnalyzer.getCurrentLine(), this.lexicalAnalyzer.getLexeme());              
+                        ErrorHandler.print(ErrorHandler.INVALID_TYPE, this.lexicalAnalyzer.getCurrentLine(), this.symbol.getLexeme());              
                     }
                 } else if (this.flagPositive == false) {
-                    ErrorHandler.print(ErrorHandler.INVALID_TYPE, this.lexicalAnalyzer.getCurrentLine(), this.lexicalAnalyzer.getLexeme());              
+                    ErrorHandler.print(ErrorHandler.INVALID_TYPE, this.lexicalAnalyzer.getCurrentLine(), this.symbol.getLexeme());              
                 }
-                return currentType;
             }
         } else {
             ErrorHandler.print(ErrorHandler.INVALID_LEXEME, lexicalAnalyzer.getCurrentLine(), lexicalAnalyzer.getLexeme());
         }
+        return currentType;
     }
 
     private byte expressionPrecedence_2() {
-        byte currentType;
+        byte currentType = -1;
         if (lexicalAnalyzer.getToken() == SymbolTable.NOT || lexicalAnalyzer.getToken() == SymbolTable.OPEN_PAR
                 || lexicalAnalyzer.getToken() == SymbolTable.VALUE || lexicalAnalyzer.getToken() == SymbolTable.ID) {
             byte e1type = expressionPrecedence_1();
@@ -559,15 +567,15 @@ public class SyntaxAnalyzer {
             currentType = e1type;
             while (lexicalAnalyzer.getToken() == SymbolTable.MULT || lexicalAnalyzer.getToken() == SymbolTable.DIV
                     || lexicalAnalyzer.getToken() == SymbolTable.AND) {
-                if lexicalAnalyzer.getToken() == SymbolTable.MULT || lexicalAnalyzer.getToken() == SymbolTable.DIV) {
+                if (lexicalAnalyzer.getToken() == SymbolTable.MULT || lexicalAnalyzer.getToken() == SymbolTable.DIV) {
                     // Regra 6
                     if (e1type != Symbol.TYPE_INTEGER && e1type != Symbol.TYPE_BYTE) {
-                        ErrorHandler.print(ErrorHandler.INVALID_TYPE, this.lexicalAnalyzer.getCurrentLine(), this.lexicalAnalyzer.getLexeme());
+                        ErrorHandler.print(ErrorHandler.INVALID_TYPE, this.lexicalAnalyzer.getCurrentLine(), this.symbol.getLexeme());
                     }
                 } else {
                     // Regra 7
                     if (e1type != Symbol.TYPE_BOOLEAN) {
-                        ErrorHandler.print(ErrorHandler.INVALID_TYPE, this.lexicalAnalyzer.getCurrentLine(), this.lexicalAnalyzer.getLexeme());              
+                        ErrorHandler.print(ErrorHandler.INVALID_TYPE, this.lexicalAnalyzer.getCurrentLine(), this.symbol.getLexeme());              
                     }
                 }
                 tokenMatch(lexicalAnalyzer.getToken());
@@ -576,23 +584,23 @@ public class SyntaxAnalyzer {
                 if ((e1type == Symbol.TYPE_INTEGER || e1type == Symbol.TYPE_BYTE) && (e2type == Symbol.TYPE_INTEGER || e2type == Symbol.TYPE_BYTE)) {
                     currentType = Symbol.TYPE_INTEGER;
                 } else if (e1type != e2type) {
-                    ErrorHandler.print(ErrorHandler.INVALID_TYPE, this.lexicalAnalyzer.getCurrentLine(), this.lexicalAnalyzer.getLexeme());              
+                    ErrorHandler.print(ErrorHandler.INVALID_TYPE, this.lexicalAnalyzer.getCurrentLine(), this.symbol.getLexeme());              
                 }
             }
-            return currentType;
         } else {
             ErrorHandler.print(ErrorHandler.INVALID_LEXEME, lexicalAnalyzer.getCurrentLine(), lexicalAnalyzer.getLexeme());
         }
+        return currentType;
     }
 
     private byte expressionPrecedence_1() {
-        byte currentType;
+        byte currentType = -1;
         if (lexicalAnalyzer.getToken() == SymbolTable.NOT) {
             tokenMatch(SymbolTable.NOT);
             byte e1type = expressionPrecedence_1();
             // Regra 4
             if (e1type != Symbol.TYPE_BOOLEAN) {
-                ErrorHandler.print(ErrorHandler.INVALID_TYPE, lexicalAnalyzer.getCurrentLine(), lexicalAnalyzer.getLexeme());
+                ErrorHandler.print(ErrorHandler.INVALID_TYPE, lexicalAnalyzer.getCurrentLine(), this.symbol.getLexeme());
             } else {
                 currentType = e1type;
             }
@@ -636,6 +644,7 @@ public class SyntaxAnalyzer {
         } else {
             ErrorHandler.print(ErrorHandler.INVALID_LEXEME, lexicalAnalyzer.getCurrentLine(), lexicalAnalyzer.getLexeme());
         }
+        return -1;
     }
 
 }
