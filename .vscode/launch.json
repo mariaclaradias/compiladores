@@ -8,7 +8,8 @@
             "type": "java",
             "name": "Debug (Launch) - Current File",
             "request": "launch",
-            "mainClass": "Main"
+            "mainClass": "Main",
+            "args": "t3.l"
         }
     ]
 }

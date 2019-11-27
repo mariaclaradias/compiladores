@@ -1,8 +1,11 @@
 /* Exemplo de Programa na linguagem L */
 
-integer n;
+boolean n = true;
+byte b;
 
 /* Programa Principal */
 main
-  n = 0h00 + 1;
+  while(n) begin
+    b=0;
+  end
 end

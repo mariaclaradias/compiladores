@@ -216,6 +216,7 @@ class LexicalAnalyzer {
                 updateLexeme();
             }
         } else if (this.ALLOWED_CHARACTERS.contains(this.currentCharacter)) {
+            this.type = Symbol.TYPE_INTEGER;
             this.shouldReturnCharacter = true;
             this.nextState = this.finalState;
         }

@@ -493,7 +493,7 @@ public class SyntaxAnalyzer {
 
     private byte expression() {
         byte currentType = -1;
-        boolean flagEquals=true;
+        boolean flagEquals=false, flagBoolean=false;
         if (this.lexicalAnalyzer.getToken() == SymbolTable.ADD || this.lexicalAnalyzer.getToken() == SymbolTable.SUB
                 || this.lexicalAnalyzer.getToken() == SymbolTable.NOT || this.lexicalAnalyzer.getToken() == SymbolTable.OPEN_PAR
                 || this.lexicalAnalyzer.getToken() == SymbolTable.VALUE || this.lexicalAnalyzer.getToken() == SymbolTable.ID) {
@@ -511,6 +511,8 @@ public class SyntaxAnalyzer {
                 if (this.lexicalAnalyzer.getToken() == SymbolTable.EQUAL_TO) {
                     // Regra 18
                     flagEquals = true;
+                }else{
+                    flagBoolean = true;
                 }
                 tokenMatch(this.lexicalAnalyzer.getToken());
                 byte exp2Type = expressionPrecedence_3();
@@ -523,6 +525,9 @@ public class SyntaxAnalyzer {
                     if (flagEquals == false && currentType != Symbol.TYPE_STRING) {
                         ErrorHandler.print(ErrorHandler.INVALID_TYPE, this.lexicalAnalyzer.getCurrentLine(), this.symbol.getLexeme());
                     }
+                }
+                if(flagBoolean || flagEquals){
+                    currentType = Symbol.TYPE_BOOLEAN;
                 }
             }
         } else {
