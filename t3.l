@@ -1,19 +1,8 @@
 /* Exemplo de Programa na linguagem L */
 
-integer n=0h0;
-string nome;
-boolean naoTerminou;
-const MAXITER=10;
+integer n;
 
 /* Programa Principal */
 main
-  write('Digite seu nome: ');
-  readln(nome);
-  naoTerminou=true;
-  n=0;
-  while (naoTerminou) begin
-    writeln('Ola'' ',nome);
-    n=n+1;
-    naoTerminou=n<MAXITER;
-  end
+  n = 0h00 + 1;
 end
